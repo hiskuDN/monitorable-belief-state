@@ -4,6 +4,10 @@ Research on whether **predictive-representation training objectives** (next-late
 
 **[Try the interactive demo](https://probe.hiskiasdingeto.com/)**: a linear probe reading position from a frozen GPT vs predict-ahead models, side by side.
 
+<p align="center">
+  <video src="https://github.com/hiskuDN/monitorable-belief-state/raw/main/media/demo.mov" width="760" controls muted></video>
+</p>
+
 ## The question
 
 > Do predictive-representation objectives make a model's belief state more monitorable, and how do monitorability, compactness, and capability trade off across them?
