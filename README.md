@@ -5,7 +5,7 @@ Research on whether **predictive-representation training objectives** (next-late
 **[Try the interactive demo](https://probe.hiskiasdingeto.com/)**: a linear probe reading position from a frozen GPT vs predict-ahead models, side by side.
 
 <p align="center">
-  <video src="https://github.com/hiskuDN/monitorable-belief-state/raw/main/media/demo.mov" width="760" controls muted></video>
+  <img src="media/demo.gif" width="640" alt="The belief-state monitor: a linear probe decoding each model's position. The vanilla model is muddy and lands on the wrong cell; the predict-ahead model is sharp and correct." />
 </p>
 
 ## The question
