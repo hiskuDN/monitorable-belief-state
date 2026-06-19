@@ -1,0 +1,1072 @@
+{
+  "arm": "gpt",
+  "seed": 1235,
+  "ckpt": "/outputs/gpt_seed1235/GPT-seed1235/ckpt_iter_6001_1.2691.pt",
+  "n_layers": 9,
+  "n_eval": 6000,
+  "params": {
+    "grid_size": 9,
+    "trap_frac": 0.04,
+    "map_seed": 7,
+    "min_steps": 32,
+    "max_steps": 72,
+    "exp_k": 3,
+    "horizon": 8,
+    "n_train": 300000,
+    "n_val": 10000
+  },
+  "leakage_audit": {
+    "n": 6000,
+    "p_G1": 0.5055,
+    "corr_G_length": -0.005406094931673651,
+    "corr_G_start": 0.004518275892876699,
+    "corr_G_stuck": 0.0,
+    "corr_G_exp_pos": -0.0019685772293053833,
+    "frac_stuck": 0.0,
+    "mean_length": 51.845333333333336,
+    "frac_with_window": 1.0,
+    "exp_k_base_rate": 0.5200018002263141,
+    "failures": []
+  },
+  "effective_rank_final": 52.51114273071289,
+  "results": {
+    "y_exp_1": {
+      "linear": [
+        {
+          "acc": 0.9212,
+          "auroc": 0.9563182019288289,
+          "chance": 0.8876,
+          "shuffled_acc": 0.8876,
+          "shuffled_auroc": 0.5379382845339266,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 0
+        },
+        {
+          "acc": 0.9789,
+          "auroc": 0.9955208921374605,
+          "chance": 0.8876,
+          "shuffled_acc": 0.8876,
+          "shuffled_auroc": 0.5155423818718636,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 1
+        },
+        {
+          "acc": 0.99595,
+          "auroc": 0.9997690726843068,
+          "chance": 0.8876,
+          "shuffled_acc": 0.8876,
+          "shuffled_auroc": 0.5409542722067103,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 2
+        },
+        {
+          "acc": 0.9994,
+          "auroc": 0.9999750917745321,
+          "chance": 0.8876,
+          "shuffled_acc": 0.8876,
+          "shuffled_auroc": 0.5363400109095021,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 3
+        },
+        {
+          "acc": 0.99995,
+          "auroc": 0.9999998747071154,
+          "chance": 0.8876,
+          "shuffled_acc": 0.8876,
+          "shuffled_auroc": 0.5088197796168323,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 4
+        },
+        {
+          "acc": 0.9995,
+          "auroc": 0.9999980704895763,
+          "chance": 0.8876,
+          "shuffled_acc": 0.8876,
+          "shuffled_auroc": 0.518548621758222,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 5
+        },
+        {
+          "acc": 0.9995,
+          "auroc": 0.9999977196694994,
+          "chance": 0.8876,
+          "shuffled_acc": 0.8876,
+          "shuffled_auroc": 0.5245061480717325,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 6
+        },
+        {
+          "acc": 0.99955,
+          "auroc": 0.9999987971883073,
+          "chance": 0.8876,
+          "shuffled_acc": 0.8876,
+          "shuffled_auroc": 0.5293609967660403,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 7
+        },
+        {
+          "acc": 0.99955,
+          "auroc": 0.9999978950795378,
+          "chance": 0.8876,
+          "shuffled_acc": 0.8876,
+          "shuffled_auroc": 0.5126438061612826,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 8
+        }
+      ],
+      "mlp": [
+        {
+          "acc": 0.98125,
+          "auroc": 0.9964432607663674,
+          "chance": 0.8876,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 0
+        },
+        {
+          "acc": 0.999,
+          "auroc": 0.9999708568750311,
+          "chance": 0.8876,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 1
+        },
+        {
+          "acc": 0.9993,
+          "auroc": 0.9999765201134171,
+          "chance": 0.8876,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 2
+        },
+        {
+          "acc": 0.99935,
+          "auroc": 0.9999884479960356,
+          "chance": 0.8876,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 3
+        },
+        {
+          "acc": 0.9995,
+          "auroc": 0.9999918058453441,
+          "chance": 0.8876,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 4
+        },
+        {
+          "acc": 0.99945,
+          "auroc": 0.9999799030213026,
+          "chance": 0.8876,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 5
+        },
+        {
+          "acc": 0.99955,
+          "auroc": 0.9999969929707684,
+          "chance": 0.8876,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 6
+        },
+        {
+          "acc": 0.9995,
+          "auroc": 0.9999901770378437,
+          "chance": 0.8876,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 7
+        },
+        {
+          "acc": 0.9988,
+          "auroc": 0.999921215834134,
+          "chance": 0.8876,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.1124,
+          "layer": 8
+        }
+      ]
+    },
+    "y_exp_k": {
+      "linear": [
+        {
+          "acc": 0.9436,
+          "auroc": 0.9907967274920941,
+          "chance": 0.5193,
+          "shuffled_acc": 0.5217,
+          "shuffled_auroc": 0.4992774233897538,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 0
+        },
+        {
+          "acc": 0.98725,
+          "auroc": 0.999453706043857,
+          "chance": 0.5193,
+          "shuffled_acc": 0.5196,
+          "shuffled_auroc": 0.511928643201224,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 1
+        },
+        {
+          "acc": 0.99645,
+          "auroc": 0.9999390992603339,
+          "chance": 0.5193,
+          "shuffled_acc": 0.51705,
+          "shuffled_auroc": 0.5145082567221858,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 2
+        },
+        {
+          "acc": 0.99765,
+          "auroc": 0.9999632452368732,
+          "chance": 0.5193,
+          "shuffled_acc": 0.5155,
+          "shuffled_auroc": 0.5120076258822596,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 3
+        },
+        {
+          "acc": 0.9964,
+          "auroc": 0.9999232055793851,
+          "chance": 0.5193,
+          "shuffled_acc": 0.4984,
+          "shuffled_auroc": 0.5016658570603857,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 4
+        },
+        {
+          "acc": 0.99345,
+          "auroc": 0.9998134720808616,
+          "chance": 0.5193,
+          "shuffled_acc": 0.50715,
+          "shuffled_auroc": 0.507038557168639,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 5
+        },
+        {
+          "acc": 0.9926,
+          "auroc": 0.9997665020974652,
+          "chance": 0.5193,
+          "shuffled_acc": 0.5077,
+          "shuffled_auroc": 0.5136869980796588,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 6
+        },
+        {
+          "acc": 0.99135,
+          "auroc": 0.9996978598232223,
+          "chance": 0.5193,
+          "shuffled_acc": 0.50585,
+          "shuffled_auroc": 0.5120605297068421,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 7
+        },
+        {
+          "acc": 0.99125,
+          "auroc": 0.9996027330881921,
+          "chance": 0.5193,
+          "shuffled_acc": 0.50335,
+          "shuffled_auroc": 0.5083898705715568,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 8
+        }
+      ],
+      "mlp": [
+        {
+          "acc": 0.9819,
+          "auroc": 0.9988123204049104,
+          "chance": 0.5193,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 0
+        },
+        {
+          "acc": 0.9973,
+          "auroc": 0.9999633754308568,
+          "chance": 0.5193,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 1
+        },
+        {
+          "acc": 0.99905,
+          "auroc": 0.9999966450011859,
+          "chance": 0.5193,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 2
+        },
+        {
+          "acc": 0.99885,
+          "auroc": 0.9999867702882587,
+          "chance": 0.5193,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 3
+        },
+        {
+          "acc": 0.99745,
+          "auroc": 0.9999791188879783,
+          "chance": 0.5193,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 4
+        },
+        {
+          "acc": 0.9978,
+          "auroc": 0.9999758440085391,
+          "chance": 0.5193,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 5
+        },
+        {
+          "acc": 0.9956,
+          "auroc": 0.9999191194912772,
+          "chance": 0.5193,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 6
+        },
+        {
+          "acc": 0.99635,
+          "auroc": 0.999933701217466,
+          "chance": 0.5193,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 7
+        },
+        {
+          "acc": 0.9948,
+          "auroc": 0.9998787693712122,
+          "chance": 0.5193,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5193,
+          "layer": 8
+        }
+      ]
+    },
+    "y_cell": {
+      "linear": [
+        {
+          "acc": 0.944,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": 0.0157,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 0
+        },
+        {
+          "acc": 0.9994,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": 0.0184,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 1
+        },
+        {
+          "acc": 0.99835,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": 0.0186,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 2
+        },
+        {
+          "acc": 0.99775,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": 0.02045,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 3
+        },
+        {
+          "acc": 0.9962,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": 0.0171,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 4
+        },
+        {
+          "acc": 0.99525,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": 0.01735,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 5
+        },
+        {
+          "acc": 0.99395,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": 0.0182,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 6
+        },
+        {
+          "acc": 0.99385,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": 0.01925,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 7
+        },
+        {
+          "acc": 0.99325,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": 0.02005,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 8
+        }
+      ],
+      "mlp": [
+        {
+          "acc": 0.9755,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 0
+        },
+        {
+          "acc": 0.9989,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 1
+        },
+        {
+          "acc": 0.99635,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 2
+        },
+        {
+          "acc": 0.99675,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 3
+        },
+        {
+          "acc": 0.99375,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 4
+        },
+        {
+          "acc": 0.9922,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 5
+        },
+        {
+          "acc": 0.991,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 6
+        },
+        {
+          "acc": 0.99195,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 7
+        },
+        {
+          "acc": 0.98885,
+          "auroc": NaN,
+          "chance": 0.0169,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 38.97685,
+          "layer": 8
+        }
+      ]
+    },
+    "y_dec": {
+      "linear": [
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": 0.5112,
+          "shuffled_auroc": 0.5048075554968012,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 0
+        },
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": 0.4925,
+          "shuffled_auroc": 0.4957137297887134,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 1
+        },
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": 0.49,
+          "shuffled_auroc": 0.4888851156791464,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 2
+        },
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": 0.49205,
+          "shuffled_auroc": 0.48989976489831505,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 3
+        },
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": 0.488,
+          "shuffled_auroc": 0.4926322851714879,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 4
+        },
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": 0.4987,
+          "shuffled_auroc": 0.5017812731848279,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 5
+        },
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": 0.4984,
+          "shuffled_auroc": 0.4971954325331087,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 6
+        },
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": 0.4957,
+          "shuffled_auroc": 0.4973980461917717,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 7
+        },
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": 0.4897,
+          "shuffled_auroc": 0.49224316228556086,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 8
+        }
+      ],
+      "mlp": [
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 0
+        },
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 1
+        },
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 2
+        },
+        {
+          "acc": 0.99845,
+          "auroc": 0.9999939064313624,
+          "chance": 0.5121,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 3
+        },
+        {
+          "acc": 1.0,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 4
+        },
+        {
+          "acc": 0.9996,
+          "auroc": 0.9999986492089228,
+          "chance": 0.5121,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 5
+        },
+        {
+          "acc": 0.9998,
+          "auroc": 0.9999997998828033,
+          "chance": 0.5121,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 6
+        },
+        {
+          "acc": 0.99995,
+          "auroc": 1.0,
+          "chance": 0.5121,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 7
+        },
+        {
+          "acc": 0.99965,
+          "auroc": 0.9999992195429331,
+          "chance": 0.5121,
+          "shuffled_acc": NaN,
+          "shuffled_auroc": NaN,
+          "n_train": 40000,
+          "n_val": 20000,
+          "val_pos_rate": 0.5121,
+          "layer": 8
+        }
+      ],
+      "position_conditioned": {
+        "9": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "10": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "11": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "12": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "13": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "14": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "15": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "16": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "17": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "18": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "19": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "20": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "21": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "22": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "23": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "24": {
+          "acc": 1.0,
+          "n": 1200
+        },
+        "25": {
+          "acc": 1.0,
+          "n": 1172
+        },
+        "26": {
+          "acc": 1.0,
+          "n": 1138
+        },
+        "27": {
+          "acc": 0.9991015274034142,
+          "n": 1113
+        },
+        "28": {
+          "acc": 1.0,
+          "n": 1073
+        },
+        "29": {
+          "acc": 1.0,
+          "n": 1057
+        },
+        "30": {
+          "acc": 1.0,
+          "n": 1021
+        },
+        "31": {
+          "acc": 1.0,
+          "n": 998
+        },
+        "32": {
+          "acc": 1.0,
+          "n": 976
+        },
+        "33": {
+          "acc": 1.0,
+          "n": 951
+        },
+        "34": {
+          "acc": 1.0,
+          "n": 924
+        },
+        "35": {
+          "acc": 1.0,
+          "n": 896
+        },
+        "36": {
+          "acc": 1.0,
+          "n": 863
+        },
+        "37": {
+          "acc": 1.0,
+          "n": 840
+        },
+        "38": {
+          "acc": 1.0,
+          "n": 817
+        },
+        "39": {
+          "acc": 1.0,
+          "n": 783
+        },
+        "40": {
+          "acc": 1.0,
+          "n": 761
+        },
+        "41": {
+          "acc": 1.0,
+          "n": 734
+        },
+        "42": {
+          "acc": 1.0,
+          "n": 704
+        },
+        "43": {
+          "acc": 1.0,
+          "n": 667
+        },
+        "44": {
+          "acc": 1.0,
+          "n": 629
+        },
+        "45": {
+          "acc": 1.0,
+          "n": 594
+        },
+        "46": {
+          "acc": 1.0,
+          "n": 570
+        },
+        "47": {
+          "acc": 1.0,
+          "n": 537
+        },
+        "48": {
+          "acc": 1.0,
+          "n": 502
+        },
+        "49": {
+          "acc": 1.0,
+          "n": 468
+        },
+        "50": {
+          "acc": 1.0,
+          "n": 434
+        },
+        "51": {
+          "acc": 1.0,
+          "n": 399
+        },
+        "52": {
+          "acc": 1.0,
+          "n": 373
+        },
+        "53": {
+          "acc": 1.0,
+          "n": 346
+        },
+        "54": {
+          "acc": 1.0,
+          "n": 308
+        },
+        "55": {
+          "acc": 1.0,
+          "n": 274
+        },
+        "56": {
+          "acc": 1.0,
+          "n": 252
+        },
+        "57": {
+          "acc": 1.0,
+          "n": 230
+        },
+        "58": {
+          "acc": 1.0,
+          "n": 203
+        },
+        "59": {
+          "acc": 1.0,
+          "n": 176
+        },
+        "60": {
+          "acc": 1.0,
+          "n": 156
+        },
+        "61": {
+          "acc": 1.0,
+          "n": 122
+        },
+        "62": {
+          "acc": 1.0,
+          "n": 96
+        },
+        "63": {
+          "acc": 1.0,
+          "n": 56
+        }
+      }
+    }
+  }
+}

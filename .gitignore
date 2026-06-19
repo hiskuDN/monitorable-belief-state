@@ -1,0 +1,11 @@
+.DS_Store
+.venv/
+__pycache__/
+*.pyc
+
+# Upstream NextLat clone is not vendored — re-clone to run. We track only the
+# files we added/modified (force-added in git); see NextLat/EXP0_CHANGES.md.
+NextLat/
+
+# Blog draft is kept on the website only (web/src/content), not pushed as a doc.
+docs/blog/
