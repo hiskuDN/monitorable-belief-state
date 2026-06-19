@@ -2,7 +2,7 @@
 
 Research on whether **predictive-representation training objectives** (next-latent prediction, multi-token prediction, and relatives) make a transformer's internal **belief state** more *monitorable*: the kind of internal state a safety monitor would want to read. The thesis is general; NextLat (Teoh et al., NeurIPS 2025) is the seed and one studied instance, not the bet.
 
-**[Try the interactive demo](web/)**: a linear probe reading position from a frozen GPT vs predict-ahead models, side by side.
+**[Try the interactive demo](https://probe.hiskiasdingeto.com/)**: a linear probe reading position from a frozen GPT vs predict-ahead models, side by side.
 
 ## The question
 
@@ -35,7 +35,7 @@ Code lives in [`experiments/gridworld/`](experiments/gridworld/) with shared Mod
 
 ## Demo
 
-[`web/`](web/) is a fully static, precomputed demo (Vite + React): a linear probe decoding a model's belief about its position step by step, GPT vs predict-ahead, plus a by-layer decodability chart. No model runs in the browser.
+Live at **[probe.hiskiasdingeto.com](https://probe.hiskiasdingeto.com/)**. The source ([`web/`](web/)) is a fully static, precomputed app (Vite + React): a linear probe decoding a model's belief about its position step by step, GPT vs predict-ahead, plus a by-layer decodability chart. No model runs in the browser.
 
 ```
 cd web && pnpm install && pnpm dev
