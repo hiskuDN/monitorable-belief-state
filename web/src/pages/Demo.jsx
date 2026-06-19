@@ -20,11 +20,11 @@ export default function Demo() {
   return (
     <div className="wrap">
       <header className="hero">
-        <div className="eyebrow">NextLat for AI safety · interactive demo</div>
+        <div className="eyebrow">monitorable belief state · interactive demo</div>
         <h1>Can you read a model&apos;s <span className="grad">belief state</span>?</h1>
         <p className="lede">
-          One of these transformers was trained to predict its own future (NextLat); the other is a
-          vanilla next-token model (GPT). Both navigate a grid blindfolded, and we try to read each
+          One of these transformers was trained with a <b>predict-ahead objective</b>; the other is a
+          vanilla next-token model. Both navigate a grid blindfolded, and we try to read each
           one&apos;s mind with a simple probe. Watch how legible each turns out to be.
         </p>
       </header>
@@ -68,9 +68,9 @@ export default function Demo() {
         <BeliefMonitor data={data} />
         <div className="takeaway">
           Same task, same probe, same training budget. Only the training objective differs.
-          <b> NextLat&apos;s belief lands on a single bright cell; GPT&apos;s smears across the board and
-          often backs the wrong one.</b> The information is in there either way (the model navigates
-          fine); the predictive objective makes it <em>linearly legible</em>.
+          <b> The predict-ahead model&apos;s belief lands on a single bright cell; the vanilla model&apos;s
+          smears across the board and often backs the wrong one.</b> The information is in there either
+          way (the model navigates fine); the predict-ahead objective makes it <em>linearly legible</em>.
         </div>
       </div>
 
@@ -93,8 +93,9 @@ export default function Demo() {
         <div className="takeaway">
           Same decodability, very different compactness. All the predictive objectives reach ~0.95,
           but their effective ranks spread widely (NextLat ≈{n.eff_rank} vs MTP ≈{data.arms.mtp ? data.arms.mtp.eff_rank : '?'}).
-          <b> NextLat is the only one that is both highly monitorable and highly compact</b>; that
-          compactness is its distinctive property, and whether it buys a monitor anything is the open question.
+          NextLat is the most compact, but <b>that compactness turns out to be safety-neutral</b>: it
+          buys no cheaper or more robust monitor. Monitorability is a property of the objective class,
+          not of any one method.
         </div>
       </div>
 
@@ -102,11 +103,12 @@ export default function Demo() {
         <div className="section-label">What this is (and isn&apos;t)</div>
         <h2>The honest version</h2>
         <p className="muted" style={{ marginTop: 0 }}>
-          This is a controlled, small-scale (≈6M-param) existence proof on a synthetic gridworld, not
-          a language or agentic claim. The monitorability gain is <b>generic to predict-ahead
-          training</b> (multi-token objectives match NextLat); NextLat&apos;s distinctive property is the
-          compression you see here. The effect <b>survives a 4× scale-up</b> of the baseline. The open
-          question is whether that compactness buys a real monitor anything.
+          This is a controlled, small-scale (≈6-33M-param) existence proof on a synthetic gridworld,
+          not a language or agentic claim. The monitorability gain is <b>generic to predict-ahead
+          training</b> (multi-token objectives match NextLat) and <b>survives a 4× scale-up</b> of the
+          baseline. NextLat&apos;s distinctive property is compression, but it turned out
+          <b> safety-neutral</b> (it buys no cheaper or more robust monitor). So the durable claim is
+          class-level: <em>predict-ahead training improves belief-state monitorability.</em>
         </p>
       </div>
 
