@@ -31,7 +31,7 @@ export default function App() {
     <>
       <nav className="topnav">
         <div className="topnav-inner">
-          <a className="brand" href="#/">NextLat <span>· belief-state monitor</span></a>
+          <a className="brand" href="#/">Monitorable belief state <span>· demo</span></a>
           <div className="topnav-links">
             <a href="#/" className={r.name === 'demo' ? 'active' : ''}>Demo</a>
           </div>
