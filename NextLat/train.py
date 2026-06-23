@@ -31,6 +31,7 @@ from data.fineweb import FineWebDataModule
 from data.countdown import CountdownDataModule
 from data.manhattan_dataset import ManhattanDataModule
 from data.gridworld import GridworldDataModule
+from data.concealworld import ConcealworldDataModule
 
 DATAMODULES = {
     "tinystories": TinyStoriesDataModule,
@@ -41,6 +42,7 @@ DATAMODULES = {
     "countdown": CountdownDataModule,
     "manhattan": ManhattanDataModule,
     "gridworld": GridworldDataModule,
+    "concealworld": ConcealworldDataModule,
 }
 
 
