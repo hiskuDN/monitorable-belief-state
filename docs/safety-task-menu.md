@@ -79,6 +79,26 @@ Permission (a flag set/overridden over history), so it adds little; **Sandbox/bo
 essentially gridworld-redux and tests almost nothing new. Pairing Permission with the
 structurally-distinct Trust/provenance covers the most ground.
 
+## The deception rung — incentive before surface
+
+The hard/decoupled tasks (#11 deception, #12 theory-of-mind) are addressed by a **deception ladder**,
+sequenced by the first-principles rule that the binding constraint is *incentive*, not *surface*:
+
+- **2a — [concealworld](experiments/concealworld/scope.md) (next):** add the missing ingredient — an
+  *incentive to conceal* — on the clean gridworld harness, changing exactly one variable vs Exp-0. A
+  teacher masks a secret it needs to act on; probe whether the secret stays linearly recoverable
+  during the masking window, and whether predict-ahead keeps it recoverable longer. Pure-supervised
+  (clone a concealer), cheap.
+- **2b — discovered/adversarial incentive (gated on 2a):** RL / self-play against a frozen challenger,
+  or an adversarial-probe term — does monitorability survive an incentive the model *discovers* (or
+  is pushed toward), not one demonstrated? The real evasion test; bigger build.
+- **language surface — [lieworld](experiments/lieworld/scope.md) (later):** the same suppressed-truth
+  question on a language QA surface, layered on once concealworld reads out.
+
+All three stay novel against SAPLMA-style lie-detection probing (frozen model, standalone statement,
+nonlinear classifier) — see
+[feasibility-study.md](feasibility-study.md#relation-to-prior-work-lie-detection--latent-knowledge-probing).
+
 ## First experiment sketch — the Permission "toolworld"
 
 *(To be fully scoped before building, like the Exp-0 plan.)* A compact symbolic tool-use simulator:

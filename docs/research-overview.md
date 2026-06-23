@@ -210,7 +210,10 @@ input. Ordered nearest-to-furthest from the gridworld:
   essentially the toy's carried-bit idea scaled to language and long context.
 - **Entity / world-state tracking & theory-of-mind** — track where an object is, who holds what, or
   what an agent *believes*, after a sequence of moves (Sally–Anne, bAbI, TextWorld-style). Ground
-  truth from the simulator; tests richer multi-entity belief states.
+  truth from the simulator; tests richer multi-entity belief states. *Scoped instance:* **lieworld**
+  ([experiments/lieworld/scope.md](experiments/lieworld/scope.md)) — induce a false answer and probe
+  whether the suppressed true belief stays linearly recoverable (the first "is it lying" test, kept
+  distinct from SAPLMA-style probing).
 - **Program / interpreter state** — track a variable's value or definedness as the model reads
   code; probe at each line, ground truth by execution. Safety-adjacent: the model's world-model of
   code it is about to run.
