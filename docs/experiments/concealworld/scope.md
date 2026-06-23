@@ -1,196 +1,148 @@
-# Concealworld (2a) — Monitorability of a Masked-but-Instrumental Secret
+# Concealworld (2a) — Monitorability of a Masked, Instrumentally-Needed Secret
 
-Status: **scoped, not built.** The first experiment in the program with an *incentive to conceal*.
-Stage **2a** of the deception ladder (see [research-overview](../../research-overview.md) and the
-first-principles route in the session notes): the cheap, **pure-supervised** rung — clone a teacher
-that successfully masks a secret — built as a **minimal one-variable extension of the Exp-0
-decoupled-bit harness**. Stage 2b (genuine discovered incentive via RL / self-play) is gated on 2a's
-result and is **not** in scope here.
+Status: **scoped + built; headroom-gating in progress.** The first experiment in the program with
+an *incentive to conceal*. Stage **2a** of the deception ladder: a model must maintain a secret it
+will *use* to act but *masks* in its behavior; we ask whether the secret stays **linearly
+monitorable** from frozen hidden states, and whether **predict-ahead training** keeps it monitorable
+better than a vanilla GPT. Pure-supervised (the masking is demonstrated, not discovered) — the
+realistic *distillation* threat. Stage 2b (a discovered/adversarial incentive via RL) is gated on
+this result and not built here.
 
 ## The one-line question
 
-> When a model holds a secret it **needs** (to act) but **masks** in its behavior, is the secret
-> still **linearly recoverable** from its hidden state during the masking window — and does
-> **predict-ahead training** keep it recoverable longer than a vanilla baseline?
+> When a model holds a secret it must use later but isn't expressing now, is that secret **linearly
+> decodable** from its hidden state *while it's being masked* — and does **predict-ahead training**
+> make it more decodable than a vanilla GPT?
 
-A monitor that reads the secret from hidden state catches a deception that an **output-only** monitor
-cannot (behavior is masked by construction). 2a asks whether that representational monitor works, and
-whether training objective changes how well.
+A cheap linear monitor that can read the secret mid-masking catches a deception an output-only
+monitor cannot (behavior is masked by construction). 2a asks whether such a monitor works and whether
+training objective changes how well.
 
-## What changes vs Exp-0 (exactly one thing)
+## Why the secret is a *running aggregate* (and the v1 dead-end)
 
-| | Exp-0 decoupled bit | Concealworld (2a) |
-| --- | --- | --- |
-| G revealed once, early | yes | yes |
-| What G drives | a **terminal symbol** at `T` (`terminal = f(G)`) | the agent's **goal** — a behavioral choice it acts on |
-| Is G instrumentally needed? | only to emit one token | **yes — to reach the right goal** (proven by task-sanity) |
-| Behavior during the probe window | G-independent (incidentally) | G-independent **by an incentive to conceal** (masking) |
-| Probe target | G in window `W` | G in the **masking window** `W_mask` |
+**v1 failed and taught us the key constraint.** v1 made the secret a single token `g{G}` at a fixed
+early position. A GPT trained for *300 steps* already decoded it at **1.000** in the masking window —
+no headroom. Root cause: a single fixed-position token is *passively broadcast* into every downstream
+residual by ordinary attention, so a linear probe reads it for free, for every arm, with no
+computation or training pressure. There was nothing for predict-ahead to improve.
 
-The single conceptual change: **G goes from "selects a terminal symbol" to "selects a goal the agent
-pursues but hides until a late commit."** That converts the decoupled bit from *incidentally* unused
-to *deliberately masked while instrumentally necessary* — which is what makes it deception rather than
-irrelevance. Everything else (grid, tokenizer, secret-bit reveal, probe machinery, arms) is reused.
+**v2 fixes this by making the secret a nonlinear running aggregate that must be tracked.** The secret
+at time `t` is a **running sum**: `S_t = (d₀ + d₁ + … + updates so far) mod K`. Two properties make
+this work where v1 didn't:
 
-## Environment (`NextLat/data/concealworld.py`, reusing gridworld utils)
+1. **Nonlinearity closes the free-readout shortcut.** `S_t` is *not* a linear function of the
+   individual updates, so even if attention passively superposes the raw update tokens into a later
+   residual, a **linear** probe cannot combine them into `S_t`. For `S_t` to be linearly readable the
+   model must *actively maintain a register*.
+2. **A changing value defeats "compute-once-and-carry."** Because the updates are **interleaved
+   throughout** the sequence and `S_t` keeps changing, the model can't compute the answer once and
+   carry a constant. Its options are: **carry** a live, continuously-updated register, or **gather**
+   all updates at the fork and compute then. A vanilla GPT has no mid-sequence incentive to carry
+   (nothing it emits during wandering needs `S_t`), so its cheapest path is to **defer (gather)** —
+   leaving its wandering-position residuals empty of `S_t`. Predict-ahead's objective *forbids*
+   deferral (each state must be sufficient for its own future, and the future needs the secret), so
+   it **carries**. That difference is the gap we measure.
 
-A 9×9 grid. Each episode:
+This is the shell-game / track-the-ball belief-state task, and it is a structurally distinct probe
+target from Exp-0's single-token decoupled bit (which had the same free-broadcast triviality and only
+worked under partial-observability load).
+
+## Environment (`NextLat/data/concealworld.py`)
+
+A symbolic sequence (no grid — navigation was a confound, not a feature):
 
 ```
-[start] [g{G}] [goal0_cell] [goal1_cell]  d_1 ... d_Lmask  | d_(Lmask+1) ... d_commit  [safe]  end
-                                          <-- masking -->  ^commit       <-- commit -->
+u{d0}  wait  u{d1}  wait wait  u{d2} ... (fixed length L)   act   a{S_final}   end
+<--------------- wandering phase (secret masked) --------->  ^fork  ^action      
 ```
 
-- **Secret.** `G ~ Bernoulli(½)` revealed at `r` (`g0`/`g1`). True goal = `goal_G` (two stated goal
-  cells, balanced so neither correlates with G).
-- **Masking phase (`L_mask` steps).** The teacher navigates toward a **rendezvous region consistent
-  with both goals**, along a path **sampled independently of G**. So masking-phase tokens are, by
-  construction, identically distributed across G → behavior carries **zero** information about G here.
-- **Commit phase (`L_commit` steps).** The teacher diverges from rendezvous to `goal_G`. This is
-  where G becomes behaviorally expressed; we do **not** probe concealment here (it is the expressed
-  regime).
-- **Outcome token (optional in 2a).** `[safe]` iff masking held (no G-divergence before `commit`).
-  The cloned teacher always masks, so this is constant in the core 2a dataset and carries no
-  gradient — it exists for narrative/2b. (A minority of `[caught]` traces can be added later to make
-  the safe/caught distinction learnable; kept G-balanced if so.)
+- **Updates `u{d}`** (the only informative tokens) are interleaved with neutral **`wait`** fillers at
+  density `update_density`; the first token is always an update so `S_t` is defined and **uniform on
+  `Z_K` at every position**. `S_t` = running sum mod `K`.
+- **Masked behavior:** nothing emitted during wandering depends on `S` — only the single late
+  **action `a{S_final}`** at the fork uses it. (Replacing v1's multi-step shortest-path commit with a
+  *single fork* removes navigation/path-planning confounds — Codex review.)
+- **Fixed `L`** (no trajectory-length confound).
+- **Headroom knobs:** `n_states` (`K`) and `wander_len` (`L`). Bigger `K`/`L` → more to track → less
+  likely GPT carries it for free.
 
-Training is plain next-token prediction of the direction sequence (prefix masked, as in
-Manhattan/Exp-0). The model **clones a successful concealer.**
+**Leakage audit** (`leakage_audit`, runs at datamodule construction + in the probe): asserts the
+running secret is **uniform at every offset** (`max_offset_dev ≤ atol` — kills the offset/label
+confound), the final secret is balanced, and `#updates ⊥ S_final`. A single update is independent of
+the sum by construction. The action token is the only one that reveals `S`; the probe never reads
+it.
 
-### Honest framing — what 2a is and isn't
+## Probe (`experiments/concealworld/probe.py`)
 
-2a supplies the incentive **by demonstration** (the teacher masks; the model imitates), the realistic
-*distillation* threat — a model trained to imitate a policy that happens to conceal. It does **not**
-apply pressure on the representation to hide from a probe, and it does not test whether a model would
-*discover* masking on its own. Both of those are **2b** (RL against a frozen challenger, or an
-adversarial-probe term). So a 2a positive means "predict-ahead keeps a masked-but-needed secret
-monitorable under non-adversarial distillation"; the adversarial question stays open by design.
+Frozen checkpoint → per-layer hidden states → probes for the running secret, with the confound
+controls from the Codex review:
 
-### Why predict-ahead should help (mechanism)
-
-During `W_mask`, no token depends on G, so the **local** next-token loss gives no pressure to
-represent G. The only pressure to carry G across the mask comes from the **future** commit action
-(`goal_G`). A predict-ahead objective trains the hidden state to predict its own future, so it should
-**retain G across the masking window** to support the eventual divergence. A vanilla GPT, which only
-needs G at commit and cannot re-read it (revealed once, early), may let G **decay** through a long
-mask. The longer `L_mask`, the harder the carry — this is the primary stress knob (the concealworld
-analogue of Exp-0's reveal→relevance gap).
-
-## Labels (probing only; never trained)
-
-Evaluated at each masking-phase position:
-
-- `y_dec[t] = G` — **primary target**, probed strictly in `W_mask = {r + d < t < commit − d}`.
-- Position-conditioned: `y_dec` accuracy/AUROC as a function of `t − r` (distance from reveal) across
-  `W_mask` — the **retention curve**. Decay vs flat is the headline.
-- `y_goal[t]` — the eventual goal cell (sanity: at/after commit the model knows where it's going).
-
-## Leakage control (validity-critical)
-
-The masking trajectory is sampled **before** G, exactly as Exp-0 samples the path before the bit:
-
-- `leakage_audit()` asserts, on the masking window, `G ⟂ {masking path, trajectory length, start,
-  goal-cell identities, rendezvous}` and `p(G=1)=½`. Because masking tokens are identically
-  distributed across G, **behavior in `W_mask` cannot leak G** — so any `y_dec` signal in `W_mask` is
-  genuinely representational, not the probe reading masked-but-tell-tale behavior.
-- Commit-phase positions are **excluded** from the concealment probe.
-- Shuffled-label and chance (½) floors for every (layer, position).
+- **Primary target — `S_run_wait`:** `S_t` at **wait positions** (current token is uninformative, so
+  any signal is a *carried* register — the purest test). Also `S_run` over all wandering positions.
+- **Retention curve:** **per-offset-TRAINED** linear probes (a separate probe per position `t`) — no
+  pooled cross-offset leakage — with **per-offset chance (`1/K`) + shuffled floors**. Decodability vs
+  `t` is the headline.
+- **Gather-vs-carry diagnostic:** decode `S_final` at the **last wandering token** vs the **fork
+  token**. A large positive jump = the model assembled the secret at the fork (deferral), not
+  continuous carry — direct evidence for the mechanism.
+- **Availability vs linearization:** linear (primary) + MLP (floor). If GPT's MLP recovers `S` but
+  its linear probe doesn't, predict-ahead's gain is **linearization** of an otherwise-tangled secret
+  (still safety-relevant — monitors are linear — but a *narrower* claim than Exp-0's "more
+  available"). Reported as separate, pre-registered outcomes.
+- Effective rank of wandering-position states (compression sanity).
 
 ## Training arms (`NextLat/config/concealworld/`)
 
 Matched **GPT vs NextLat vs MTP vs JTP** (+ **NextLat-h1**), identical except the auxiliary loss, at
-the Exp-0 backbone (`n_layer=8, n_embd=256, n_head=8, block_size=256`; NextLat keeps
-`lambda_mse=1.0, lambda_kl=0.1, mtp_horizon=8`). ≥3 seeds. MTP/JTP keep the claim class-level and
-guard the "it's just a different model" read, as in the gridworld sweep.
+the Exp-0 backbone (`n_layer=8, n_embd=256, n_head=8, block_size=256`). ≥3 seeds. MTP/JTP keep the
+claim class-level. Trained with a uniform step budget across arms (`modal_app.py::main`).
 
-## Probe (`experiments/concealworld/probe.py`)
+## Decision criteria (linear probes, primary = `S_run_wait`)
 
-Reuses the Exp-0 probe and the upstream `return_all_layers=True` flag — no new model surgery:
+- **predict-ahead tracks > GPT** (mean Δ > ~0.05, with GPT off-ceiling): the masked-but-instrumental
+  secret is monitorable and predict-ahead helps → greenlight **2b** (discovered/adversarial
+  incentive). Corroborated by the gather-vs-carry diagnostic (GPT jumps at the fork; predict-ahead
+  flat).
+- **GPT saturates (≈1.0):** no headroom — raise `K` / `L` and re-run (the v1 failure mode; the gate
+  below guards against it).
+- **All low / no gap:** predict-ahead doesn't visibly help; inspect retention + gather-vs-carry, and
+  reconsider before 2b. An interpretable bound on representational monitoring of masked state.
 
-- Frozen checkpoint → run eval set → cache per-layer masking-window hidden states + labels + `r`,
-  `commit`, `L_mask` metadata.
-- **Linear (primary) + 1-hidden-MLP + strong-MLP (floor/secondary)** per (layer × position). Identical
-  trajectory-level train/val split across arms & seeds.
-- Report the `W_mask` retention curve (`y_dec` vs `t − r`) per arm, with chance/shuffled/strong-MLP
-  floors, plus effective rank (compression sanity).
+## Headroom gate (the check v1 failed)
 
-## Primary analysis — the masking-length sweep
+Before any full sweep: a **GPT-only smoke**, confirming (a) GPT is **off-ceiling** on `S_run_wait`
+mid-sequence (not ≈1.0), and (b) the task is learnable (act-token accuracy high → the model *can*
+compute `S`, validating gather). If GPT saturates, raise `K`/`L`. Only then the 5-arm × 3-seed sweep.
 
-Run the panel across `L_mask` (short → long carry). Read `y_dec`-in-`W_mask` retention:
+## Honest caveats (pre-registered)
 
-- **Expected positive:** predict-ahead arms hold G flat/high across `W_mask`; GPT decays as `L_mask`
-  grows. → a masked-but-needed secret is monitorable via probe even when invisible in behavior, and
-  predict-ahead makes it **more** monitorable. The carry frontier (where each arm's retention breaks)
-  is the deliverable curve.
-- **Both flat high:** carry too easy — lengthen `L_mask` / weaken commit weighting until headroom
-  appears (the v1/v2 saturation lesson) before reading any gap.
-- **Both decay to chance:** even predict-ahead drops a long-masked instrumental latent. Sobering,
-  clean negative: representational monitorability does not survive long masking even without
-  adversarial pressure.
+- **2a's incentive is demonstrated, not discovered** — a positive speaks to distillation of a masking
+  policy, not adversarial evasion. That is 2b's remit.
+- **Availability vs linearization** — see probe; the MLP floor decides which claim we can make.
+- **Near the objective's definition** — "states that must predict their future encode future-needed
+  info better than states that needn't" is close to what predict-ahead is trained to do. The
+  non-trivial parts are *linear* decodability, the GPT comparison, and the gather-vs-carry mechanism
+  — not surprise. The distinctive safety artifact (an *online* predictive monitor) is Step 3.
+- **Horizon** — predict-ahead only pressures a wandering state to hold `S_t` if the fork is within
+  reach of its prediction horizon, so the retention curve will decay with distance from the fork
+  (that decay is the interesting science; the curve must land in a readable range).
 
-## Verification
+## Implementation map
 
-1. **Task-sanity — the gate that makes the probe meaningful.** Arms must (a) navigate validly, (b)
-   **reach `goal_G`** — proving G is *used* (instrumentally necessary; rules out the "G is irrelevant
-   and innocently forgotten" reading), and (c) reproduce the **G-independent masking trajectory** —
-   proving they conceal. (b) is the crucial one: without it there is no instrumental pressure and the
-   experiment degenerates to Exp-0.
-2. **Headroom check** — GPT below ceiling on `y_dec` in `W_mask` *before* trusting any gap.
-3. **Leakage audit** — the independence asserts above; shuffled floors at chance.
-4. **Compression sanity** — NextLat lower effective rank than GPT/MTP on masking-window states.
-5. **Primary deliverable** — `W_mask` retention curves, linear-first, ≥3 seeds with error bars,
-   across the `L_mask` sweep, against all floors.
-
-## Decision criteria (linear probes, primary target `y_dec`-in-`W_mask`)
-
-- **Predict-ahead retains > GPT across `W_mask` (esp. at long `L_mask`):** masked-but-instrumental
-  secrets are monitorable and predict-ahead helps → greenlight **2b** (does it survive a *discovered*
-  / adversarial incentive?), the **language surface** ([lieworld](../lieworld/scope.md)), and a scale
-  check.
-- **No gap (all retain):** re-check headroom; lengthen the mask. If still no gap, the effect is
-  carry-trivial here.
-- **All decay:** predict-ahead does not keep a long-masked latent legible → the approach's reach for
-  concealed state is limited; report it and reconsider before investing in 2b.
-
-## Build order
-
-1. `NextLat/data/concealworld.py` with the **leakage audit baked in** (unit-test masking ⟂ G before
-   any training); one tiny GPT run end-to-end (CPU smoke → Modal); confirm task-sanity (reaches
-   `goal_G` **and** masks).
-2. Add predict-ahead arm configs; confirm training + compression signature.
-3. `experiments/concealworld/probe.py` (masking-window, position-conditioned, linear + strong-MLP +
-   floors); by-layer retention curve for one seed at one `L_mask`.
-4. `L_mask` sweep + multi-seed aggregation in `experiments/concealworld/analyze.py`.
-5. Write up results + the go/no-go on 2b here.
-
-## Implementation map (mirror of gridworld)
-
-- `NextLat/data/concealworld.py` — generator (reusing gridworld grid/tokenizer utils) + datamodule +
-  `leakage_audit`; register `"concealworld"` in `train.py` `DATAMODULES`.
-- `NextLat/config/concealworld/{gpt,nextlat,mtp,jtp}_concealworld.yaml` — matched arms.
-- `experiments/concealworld/{probe.py, modal_app.py, analyze.py}` — reusing
-  [`../common/modal_base.py`](../../../experiments/common/modal_base.py); results under
-  `docs/results/<date>/<tag>/`.
-- Reuses the Exp-0 `return_all_layers` surgery — no new model changes expected.
+- `NextLat/data/concealworld.py` — generator + `leakage_audit` + datamodule; registered as
+  `"concealworld"` in `train.py`.
+- `NextLat/config/concealworld/{gpt,nextlat,mtp,jtp}_concealworld.yaml` — matched arms
+  (`n_states`, `wander_len`, `update_density`).
+- `experiments/concealworld/{probe.py, modal_app.py, analyze.py}` — probe (retention + gather-vs-carry
+  + availability/linearization), Modal entrypoints (`smoke`, `main` with `n_states`/`wander_len`
+  headroom knobs), aggregation. Results under `docs/results/<date>/<tag>/`.
+- Reuses the Exp-0 `return_all_layers` model surgery — no new model changes.
 
 ## Relation to the rest of the program
 
-- **Supersedes [lieworld](../lieworld/scope.md) as the *next* experiment.** The first-principles call:
-  the binding constraint on a meaningful deception test is *incentive*, not *surface*, so add the
-  incentive on the clean gridworld harness first; the language surface (lieworld) is a separate,
-  later axis layered on once concealworld establishes the effect.
-- **Extends Exp-0's decoupled-bit finding** (which showed retention with *no* incentive) by adding the
-  minimal incentive that was missing — the one new variable.
-- **Stays distinct from SAPLMA-style lie-detection** (frozen model, standalone statement, nonlinear
-  classifier): objective-as-lever, history-carried secret, behavior masks it, linear-first probe. See
-  [feasibility-study.md](../../feasibility-study.md#relation-to-prior-work-lie-detection--latent-knowledge-probing).
-
-## Risks / open questions
-
-- **2a's incentive is demonstrated, not discovered** — a positive result speaks to distillation of a
-  concealer, not adversarial evasion. That gap is exactly 2b's remit; do not overclaim.
-- **Headroom is not guaranteed**; `L_mask` is the knob, and GPT must be verified off-ceiling first.
-- **Capability matching** is approximate (architecture/data/compute, not verified-equal next-token
-  loss), as in all arms.
-- **All-decay is a real possible outcome** and is interpretable: it bounds how far representational
-  monitoring reaches for masked state even before any adversarial pressure.
+Supersedes the earlier [lieworld](../lieworld/scope.md) as the *next* experiment (incentive before
+surface). Extends Exp-0's decoupled-bit finding by adding the missing incentive and a *running*
+(history-integrated, nonlinear) secret. Distinct from SAPLMA-style lie-detection (frozen model,
+standalone statement, nonlinear classifier): objective-as-lever, a history-carried secret, behavior
+that masks it, linear-first probe — see
+[feasibility-study.md](../../feasibility-study.md#relation-to-prior-work-lie-detection--latent-knowledge-probing).
