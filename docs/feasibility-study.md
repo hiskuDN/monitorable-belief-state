@@ -268,8 +268,44 @@ The current framing is most closely adjacent to the following lines of work:
 
 - belief-state geometry in transformer residual streams
 - latent world-state probing / propositional probes
+- **lie-detection / latent-knowledge probing** (SAPLMA and relatives — see below)
 - predictive-objective training such as NextLat, MTP, and JTP
 - hidden-state-based runtime monitors and monitorability evaluations
 
 Those lines make the program legible and credible. The novelty lives in how they are being combined
 and operationalized for safety.
+
+## Relation to prior work: lie-detection / latent-knowledge probing
+
+The closest external line is **lie-detection / latent-knowledge probing** — Azaria & Mitchell,
+*The Internal State of an LLM Knows When It's Lying* (SAPLMA; EMNLP Findings 2023,
+[arXiv:2304.13734](https://arxiv.org/abs/2304.13734)), and relatives (Burns et al., *Discovering
+Latent Knowledge*, ICLR 2023; Marks & Tegmark, geometry-of-truth; Zou et al., representation
+engineering). SAPLMA freezes a pretrained LLM (OPT-6.7b, LLaMA2-7b), trains a 3-hidden-layer
+feedforward net (256→128→64) on a single mid-layer activation, and predicts the **truth-value of a
+standalone statement** ("Paris is the capital of France") at **71–83%** — establishing that
+truth-relevant internal state is recoverable from activations.
+
+We **share the premise** (probes can read truth-relevant internal state) and should cite this line
+as *support*, not competition. We differ on the axes that define our contribution:
+
+1. **The control knob is the training objective, not the probe.** SAPLMA — and the whole cluster —
+   fixes the model and varies the readout. We fix the readout and vary the **objective** (vanilla
+   GPT vs predict-ahead, trained from scratch), asking whether training makes belief state *more
+   legibly encoded*. That lever is absent from this prior work.
+2. **Belief-state vs static-input variable.** Their target sits in the statement in front of the
+   model — readable from the input plus world knowledge, at one position. Ours must be **integrated
+   over history** under partial observability — the regime where, in Exp 0, the static-input version
+   saturates and the test cannot discriminate.
+3. **Linear-first, MLP-as-floor.** They classify with a nonlinear net, which cannot separate
+   "legibly (linearly) encoded" from "present but entangled." We decide on *linear* decodability
+   (what a cheap monitor exploits) and use the MLP only as a floor — and that gap is itself one of
+   our findings.
+4. **Comparative design space.** They give a single-model existence proof; we map objectives on a
+   monitorability / compactness / robustness frontier.
+
+**Implication for the language lie experiment** ([lieworld](experiments/lieworld/scope.md)): the
+overlap risk is highest there, so it must keep *both* differentiators — the train-from-scratch
+objective contrast, and a **suppressed-truth** target that is tracked across context and decoupled
+from the emitted token (the model utters a falsehood while we probe whether the true belief is still
+legible), **not** a standalone statement to fact-check.
