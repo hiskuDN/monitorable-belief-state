@@ -80,3 +80,25 @@ headline is **the horizon → carrying relationship**, which is what to characte
 2. More seeds generally to quantify the carry/defer bimodality.
 3. **MTP learnability** — more steps / gentler schedule so ≥2 seeds learn, to confirm
    "MTP carries when it learns."
+
+## Addendum — checkpoint-trajectory check (rules out a selection artifact)
+
+We tested whether `nextlat` h8 seed1235's defer was an artifact of probing the *final*
+checkpoint. Its val loss *climbed* over training (0.96→1.19), which first looked like
+divergence. Probing earlier checkpoints (diagnostic files `probe_nextlat_seed1235_*.json`,
+via `modal_app.py::probe_at`) refutes that:
+
+| ckpt | val loss | eff_rank | fork-decode (task learned?) | late-window MLP lift (carries?) |
+|---|---|---|---|---|
+| iter-4000 | 0.96 | 8 | 0.23 ❌ | −0.03 ❌ |
+| iter-14000 | 0.97 | 72 | 0.25 ❌ | −0.02 ❌ |
+| iter-32001 | 1.19 | 195 | 1.00 ✅ | −0.02 ❌ |
+
+Two conclusions: **(a)** NextLat's **val loss is aux-dominated** (trivially minimised early
+by representational collapse, eff_rank 8) and is **not** a task-competence / convergence
+proxy — the early "low-loss" checkpoint simply hadn't learned the task (fork ≈ chance).
+So the final checkpoint is the correct one to probe. **(b)** This seed **never carried at
+any checkpoint** (late-lift ≈ 0 throughout); it went straight to the deferring solution.
+So the defer is a **genuine, stable** training outcome, not a checkpoint-selection
+artifact. Methodology note for the re-run: **select/judge checkpoints by task competence
+(fork decode), not val loss.**

@@ -87,11 +87,14 @@ def train_arm(arm: str, seed: int, overrides: list[str] | None = None, tag: str 
 
 
 @app.function(gpu=GPU, volumes={OUT: vol}, timeout=60 * 60 * 2, retries=2)
-def run_probe(arm: str, seed: int, n_eval: int = 6000, tag: str = ""):
-    """Probe a trained arm's frozen checkpoint. Returns the parsed results dict."""
+def run_probe(arm: str, seed: int, n_eval: int = 6000, tag: str = "", ckpt_override: str = ""):
+    """Probe a trained arm's frozen checkpoint. Returns the parsed results dict.
+
+    ckpt_override: probe a SPECIFIC checkpoint instead of latest_ckpt (e.g. a best-val
+    checkpoint for a seed whose training diverged) — diagnostic, used by `probe_at`."""
     vol.reload()
     out_dir = _run_dir(arm, seed, tag)
-    ckpt = open(os.path.join(out_dir, "latest_ckpt")).read().strip()
+    ckpt = ckpt_override.strip() or open(os.path.join(out_dir, "latest_ckpt")).read().strip()
     cfgs = glob.glob(os.path.join(out_dir, "*", "materialized_config.yaml"))
     assert cfgs, f"no materialized_config under {out_dir}"
     cmd = [
@@ -127,6 +130,29 @@ def _save_local(result, tag=""):
 @app.local_entrypoint()
 def probe(arm: str = "gpt", seed: int = 1234, n_eval: int = 6000, tag: str = ""):
     _save_local(run_probe.remote(arm, seed, n_eval, tag), tag)
+
+
+@app.local_entrypoint()
+def probe_at(arm: str, seed: int, ckpt: str, tag: str = "2a_full",
+             label: str = "bestckpt", n_eval: int = 6000):
+    """Diagnostic: probe a SPECIFIC checkpoint (not latest_ckpt) and save to a labelled
+    file so it doesn't clobber the canonical probe_<arm>_seed<seed>.json. Used to test
+    whether a diverged-final seed carries at its best-val checkpoint."""
+    res = run_probe.remote(arm, seed, n_eval, tag, ckpt)
+    day = datetime.date.today().isoformat()
+    d = os.path.join(RESULTS_BASE, day, tag)
+    os.makedirs(d, exist_ok=True)
+    p = os.path.join(d, f"probe_{arm}_seed{seed}_{label}.json")
+    with open(p, "w") as f:
+        json.dump(res, f, indent=2)
+    g = res["results"]["gather_vs_carry"]
+    ret = res["results"]["S_run_wait"]["retention"]
+    late = [(v["mlp_acc"], v["chance"]) for o, v in ret.items() if int(o) >= 16]
+    lift = (sum(m for m, _ in late) - sum(c for _, c in late)) / max(1, len(late))
+    print(f"[local] saved {p}")
+    print(f"[probe_at] {arm} seed{seed} ckpt={ckpt}\n"
+          f"  gather-vs-carry: last={g['last_wander']:.3f} fork={g['fork']:.3f} jump={g['jump']:+.3f}\n"
+          f"  late-window (off>=16) MLP lift over chance = {lift:+.2f}")
 
 
 @app.local_entrypoint()
