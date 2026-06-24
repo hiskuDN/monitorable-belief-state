@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Demo from './pages/Demo.jsx'
+import Concealworld from './pages/Concealworld.jsx'
 import Blogs from './pages/Blogs.jsx'
 import BlogPost from './pages/BlogPost.jsx'
 
@@ -16,6 +17,8 @@ function useHash() {
 
 function route(hash) {
   const path = hash.replace(/^#/, '') || '/'
+  if (path === '/concealworld-kcell' || path === '/concealworld-kcell/') return { name: 'concealworld', variant: 'kcell' }
+  if (path === '/concealworld' || path === '/concealworld/') return { name: 'concealworld', variant: 'gauge' }
   if (path === '/blogs' || path === '/blogs/') return { name: 'blogs' }
   const m = path.match(/^\/blogs\/(.+?)\/?$/)
   if (m) return { name: 'post', slug: m[1] }
@@ -34,10 +37,12 @@ export default function App() {
           <a className="brand" href="#/">Monitorable belief state <span>· demo</span></a>
           <div className="topnav-links">
             <a href="#/" className={r.name === 'demo' ? 'active' : ''}>Demo</a>
+            <a href="#/concealworld" className={r.name === 'concealworld' ? 'active' : ''}>Concealment</a>
           </div>
         </div>
       </nav>
       {r.name === 'demo' && <Demo />}
+      {r.name === 'concealworld' && <Concealworld variant={r.variant} />}
       {r.name === 'blogs' && <Blogs />}
       {r.name === 'post' && <BlogPost slug={r.slug} />}
     </>
