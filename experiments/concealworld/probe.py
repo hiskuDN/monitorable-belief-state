@@ -186,6 +186,81 @@ def gather_vs_carry(hs, items_tr, items_va, layer, last_off, fork_off):
     return res
 
 
+def _proba_vec(clf, X, K):
+    """predict_proba mapped onto a fixed length-K vector (class id -> column)."""
+    p = clf.predict_proba(X)
+    out = np.zeros((X.shape[0], K), dtype=np.float64)
+    for j, c in enumerate(clf.classes_):
+        out[:, int(c)] = p[:, j]
+    return out
+
+
+def dump_examples(hs, records, split, fin, n_states, n_examples=4):
+    """For a few held-out example sequences, decode the RUNNING secret S_t at every
+    wandering position (per-offset-trained linear probes, same as the retention curve)
+    and S_final at the fork, recording the full per-position probability over the K
+    values. Feeds the K-cell 'mind window' in the web demo. Examples are chosen
+    deterministically from the val split (identical records/split across arms -> the same
+    example sequences for every arm, so it's a fair same-sequence/different-model view)."""
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.linear_model import LogisticRegression
+
+    label_pos = build_label_positions(records, split)
+    tr_by = defaultdict(list)
+    for it in label_pos["S_run"]["train"]:
+        tr_by[it[3]].append(it)
+    offset_clf = {}
+    for off, items in tr_by.items():
+        if len(items) < 300:
+            continue
+        X, y, _ = gather(hs[fin], items)
+        sc = StandardScaler().fit(X)
+        clf = LogisticRegression(max_iter=2000, C=1.0).fit(sc.transform(X), y)
+        offset_clf[off] = (sc, clf)
+
+    fork_off = int(records[0]["act_pos"])
+    fitems = [it for it in label_pos["S_final"]["train"] if it[3] == fork_off]
+    Xf, yf, _ = gather(hs[fin], fitems)
+    scf = StandardScaler().fit(Xf)
+    clff = LogisticRegression(max_iter=2000, C=1.0).fit(scf.transform(Xf), yf)
+
+    val_ris = [ri for ri in range(len(records)) if not split[ri]]
+    chosen, seen = [], set()
+    for ri in val_ris:
+        t = int(records[ri]["y_dec"])
+        if t not in seen:
+            chosen.append(ri); seen.add(t)
+        if len(chosen) >= n_examples:
+            break
+    for ri in val_ris:
+        if len(chosen) >= n_examples:
+            break
+        if ri not in chosen:
+            chosen.append(ri)
+
+    examples = []
+    for ri in chosen:
+        rec = records[ri]
+        L = int(rec["L"])
+        steps = []
+        for pos in range(L):
+            if pos not in offset_clf:
+                continue
+            sc, clf = offset_clf[pos]
+            x = sc.transform(hs[fin][ri][pos][None, :].astype(np.float32))
+            probs = _proba_vec(clf, x, n_states)[0]
+            steps.append({"pos": pos, "is_update": int(rec["is_update_pos"][pos]),
+                          "true_t": int(rec["S_running"][pos]),
+                          "probs": [round(float(p), 4) for p in probs]})
+        xf = scf.transform(hs[fin][ri][fork_off][None, :].astype(np.float32))
+        fprobs = _proba_vec(clff, xf, n_states)[0]
+        examples.append({"true_final": int(rec["y_dec"]), "L": L, "act_pos": fork_off,
+                         "steps": steps,
+                         "fork": {"true": int(rec["y_dec"]),
+                                  "probs": [round(float(p), 4) for p in fprobs]}})
+    return examples
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--config", required=True)
@@ -197,6 +272,8 @@ def main():
     ap.add_argument("--n-eval", type=int, default=6000)
     ap.add_argument("--probe-seed", type=int, default=99991)
     ap.add_argument("--batch-size", type=int, default=128)
+    ap.add_argument("--mode", default="full", choices=["full", "examples"])
+    ap.add_argument("--n-examples", type=int, default=4)
     args = ap.parse_args()
 
     _import_repo(args.repo)
@@ -228,6 +305,18 @@ def main():
     split[perm[: int(0.8 * len(records))]] = True
     label_pos = build_label_positions(records, split)
 
+    fin = n_layers - 1
+    if args.mode == "examples":
+        examples = dump_examples(hs, records, split, fin, params["n_states"], args.n_examples)
+        out = {"arm": args.arm, "seed": args.seed, "ckpt": args.ckpt,
+               "n_states": params["n_states"], "examples": examples}
+        os.makedirs(args.out, exist_ok=True)
+        out_path = os.path.join(args.out, f"examples_{args.arm}_seed{args.seed}.json")
+        with open(out_path, "w") as f:
+            json.dump(out, f, indent=2)
+        print(f"[probe] wrote {out_path} ({len(examples)} example trajectories)", flush=True)
+        return
+
     rng_sub = np.random.default_rng(123)
 
     def _cap(items, n):
@@ -235,7 +324,6 @@ def main():
             return items
         return [items[i] for i in rng_sub.choice(len(items), n, replace=False)]
 
-    fin = n_layers - 1
     er_items = label_pos["S_run"]["train"][:6000]
     Xer, _, _ = gather(hs[fin], er_items) if er_items else (np.zeros((2, 2)), None, None)
     eff_rank = _effective_rank(Xer)

@@ -125,6 +125,12 @@ def main():
     pts.sort(key=lambda p: p["iter"])
     trajectory = {"arm": traj_arm, "seed": traj_seed, "points": pts} if pts else None
 
+    # per-position example trajectories (K-cell mind window), if dumped
+    examples = {}
+    for f in sorted(glob.glob(os.path.join(d, "examples_*_seed*.json"))):
+        rec = json.load(open(f))
+        examples.setdefault(rec["arm"], {})[str(rec["seed"])] = rec["examples"]
+
     out = {
         "meta": {
             "tag": rel, "K": K, "chance": round(1.0 / K, 4) if K else None,
@@ -136,13 +142,15 @@ def main():
         "arms": arms,
         "competence_carry": sorted(cc, key=lambda r: (r["arm"], r["seed"])),
         "trajectory": trajectory,
+        "examples": examples,
     }
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w") as f:
         json.dump(out, f, indent=2)
     print(f"[export] wrote {OUT}")
     print(f"[export] arms={list(arms)}  competence_carry={len(cc)} pts  "
-          f"trajectory={'%d pts' % len(pts) if pts else 'none'}")
+          f"trajectory={'%d pts' % len(pts) if pts else 'none'}  "
+          f"examples={sum(len(v) for v in examples.values())} arm-seeds")
 
 
 if __name__ == "__main__":

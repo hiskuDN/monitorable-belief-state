@@ -116,6 +116,48 @@ def run_probe(arm: str, seed: int, n_eval: int = 6000, tag: str = "", ckpt_overr
     return result
 
 
+@app.function(gpu=GPU, volumes={OUT: vol}, timeout=60 * 60 * 2, retries=2)
+def run_examples(arm: str, seed: int, tag: str = "", n_examples: int = 4):
+    """Dump per-position decoded probabilities for a few example sequences (probe --mode
+    examples). Lightweight (linear probes only). Returns the parsed examples dict."""
+    vol.reload()
+    out_dir = _run_dir(arm, seed, tag)
+    ckpt = open(os.path.join(out_dir, "latest_ckpt")).read().strip()
+    cfgs = glob.glob(os.path.join(out_dir, "*", "materialized_config.yaml"))
+    assert cfgs, f"no materialized_config under {out_dir}"
+    cmd = [
+        "python", "/root/experiments/concealworld/probe.py",
+        "--config", cfgs[0], "--ckpt", ckpt, "--arm", arm, "--seed", str(seed),
+        "--out", out_dir, "--repo", REMOTE_REPO,
+        "--mode", "examples", "--n-examples", str(n_examples),
+    ]
+    _run(cmd, cwd=REMOTE_REPO)
+    vol.commit()
+    with open(os.path.join(out_dir, f"examples_{arm}_seed{seed}.json")) as f:
+        return json.load(f)
+
+
+@app.local_entrypoint()
+def dump_examples(
+    seeds: str = "1234,1235,1236",
+    arms: str = "gpt,nextlat,mtp,jtp,nextlat_h1",
+    tag: str = "2a_full",
+    n_examples: int = 4,
+):
+    """Fan out the examples dump over arms x seeds; save examples_<arm>_seed<seed>.json
+    locally under docs/results/<date>/<tag>/ for the web export to merge."""
+    seed_list = [int(s) for s in seeds.split(",")]
+    jobs = [(a, s, tag, n_examples) for a in arms.split(",") for s in seed_list]
+    day = datetime.date.today().isoformat()
+    d = os.path.join(RESULTS_BASE, day, tag)
+    os.makedirs(d, exist_ok=True)
+    for res in run_examples.starmap(jobs):
+        p = os.path.join(d, f"examples_{res['arm']}_seed{res['seed']}.json")
+        with open(p, "w") as f:
+            json.dump(res, f, indent=2)
+        print(f"[examples] {res['arm']} seed{res['seed']}: {len(res['examples'])} trajectories")
+
+
 def _save_local(result, tag=""):
     variant = tag or "2a"
     day = datetime.date.today().isoformat()
