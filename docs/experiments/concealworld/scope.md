@@ -127,33 +127,38 @@ compute `S`, validating gather). If GPT saturates, raise `K`/`L`. Only then the 
   reach of its prediction horizon, so the retention curve will decay with distance from the fork
   (that decay is the interesting science; the curve must land in a readable range).
 
-## Early results (full sweep `2a_full`, 3 seeds for 4 arms — PRELIMINARY)
+## Results (full sweep `2a_full`, complete: 5 arms × 3 seeds)
 
 Full read: [`docs/results/2026-06-24/2a_full/FINDINGS.md`](../../results/2026-06-24/2a_full/FINDINGS.md).
-32k steps; 3 seeds (1234/1235/1236) for gpt/mtp/jtp/nextlat_h1, 2 seeds for `nextlat`
-(seed 1235 retrying). **Read per-seed** — pooled means mislead because task competence
-varies by seed.
+32k steps, K=4/L=24/density=0.3. **Read per-seed** — pooled means mislead, because both
+task competence *and* the carry-vs-defer outcome vary by seed. The task has two
+task-optimal solutions (carry the secret, or defer-and-gather at the fork; both hit
+fork-decode ≈ 1.0); the predict-ahead aux loss tips the balance.
 
-- **The headline holds and strengthens.** Position-conditioned at **late offsets (≥16)**,
-  a vanilla **GPT genuinely destroys** the masked secret in all 3 seeds — even a strong MLP
-  can't recover it (lift over chance **+0.02**), not merely "encoded non-linearly." The
-  **NextLat objective keeps it monitorable**: `nextlat` MLP **+0.43**, `nextlat_h1`
-  **linearly readable at 0.88** across all 3 seeds. Resolves availability-vs-linearization:
-  GPT = genuine absence; NextLat = genuine retention.
-- **"Predict-ahead" is not monolithic for *carrying*.** **JTP** learns the task in all 3
-  seeds (fork ≈ 0.999) yet **defers** at the fork (jump +0.49…+0.75) and loses the secret
-  mid-mask (late MLP +0.07) — GPT-like on the carrying axis. So predicting your own future
-  **latent** (NextLat) induces carrying; **joint-token** prediction (JTP) does not.
-- **MTP is unstable to learn here, but carries when it learns.** Only 1 of 3 MTP seeds
-  learned to commit (fork 0.93 vs chance for the other two); that seed carries strongly
-  (late MLP **+0.59**). MTP's failures are learnability at these hyperparameters, not a
-  carrying result.
-- **Horizon-1 surprise.** `nextlat_h1` is the **strongest, most linear** carrier — *minimal*
-  predict-ahead, not a GPT-like control; the effect is not "more horizon → more carrying."
-- **Caveats / open items:** `nextlat` is 2 seeds; the auto "Greenlight 2b" in `summary.md`
-  rides the blunt pooled metric (the honest read is per-seed late-window). Before any 2b
-  decision: (a) MTP learnability (more steps / gentler schedule so ≥2 seeds learn);
-  (b) final `nextlat` seed-1235; (c) whether JTP's learns-but-defers is robust.
+Per-seed **robust carry** (late offset ≥ 16 MLP lift over chance > 0.30, among seeds that
+learned the task): **gpt 0/3 · jtp 0/3 · mtp 1/3** (only 1/3 learned) **· nextlat-h8 1/3
+· nextlat_h1 3/3.**
+
+- **GPT is a clean, robust failure baseline.** All 3 seeds learn the task, defer at the
+  fork (jump ~0.75), and leave **no late trace even non-linearly** (MLP lift ~+0.02) —
+  the secret is *destroyed*, not merely non-linear.
+- **Only minimal (horizon-1) predict-ahead robustly carries.** `nextlat_h1` keeps the
+  secret **linearly** monitorable in all 3 seeds (late linear ~0.86, MLP +0.68; tight
+  attractor). This is the headline positive.
+- **More horizon ≠ more carry.** Full-horizon (h8) `nextlat` carries in only 1/3 seeds —
+  one seed **defers and destroys the secret exactly like GPT** despite learning the task.
+  Scaling the horizon *up* destabilises carrying.
+- **JTP is GPT-like** (0/3 carry) despite being predict-ahead; **MTP** is learnability-bound
+  (1/3 learned; that seed carries, +0.59). So predict-your-own-future-**latent at horizon
+  1** induces carrying; joint-token does not.
+- **Caveats:** n=3 and carry-vs-defer is a bimodal *training outcome*, so intermediate
+  ratios are noisy (robust endpoints — `nextlat_h1` 3/3, GPT 0/3 — are trustworthy). The
+  auto "Greenlight 2b" in `summary.md` rides the blunt pooled metric; superseded by the
+  per-seed read.
+
+**The horizon → carry-robustness relationship is now the central question — characterise it
+before 2b:** (a) **horizon sweep** mtp_horizon ∈ {1,2,4,8} × ≥5 seeds; (b) more seeds for
+the bimodality; (c) MTP learnability (more steps / gentler schedule).
 
 ## Implementation map
 
