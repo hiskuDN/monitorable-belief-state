@@ -143,8 +143,10 @@ def build_label_positions(records, split):
 
 
 def retention_curve(hs, items_tr, items_va, layer, min_train=300, min_val=30):
-    """Per-offset-TRAINED linear retention: a separate linear probe per position t.
-    Returns {off: {acc, shuffled, chance, n}}."""
+    """Per-offset-TRAINED retention: a separate probe per position t. Fits both a linear
+    probe (primary) and an MLP (the availability-vs-linearization floor) per offset, so a
+    late-position collapse can be read as 'genuinely absent' (MLP also low) vs 'present but
+    nonlinear' (MLP recovers it). Returns {off: {acc, mlp_acc, shuffled, chance, n}}."""
     tr_by, va_by = defaultdict(list), defaultdict(list)
     for it in items_tr:
         tr_by[it[3]].append(it)
@@ -157,9 +159,11 @@ def retention_curve(hs, items_tr, items_va, layer, min_train=300, min_val=30):
             continue
         Xtr, ytr, _ = gather(hs[layer], tr)
         Xva, yva, _ = gather(hs[layer], va)
-        rec = _fit_and_score(Xtr, ytr, Xva, yva, "linear", compute_shuffled=True)
-        curve[int(off)] = {"acc": rec["acc"], "shuffled": rec["shuffled_acc"],
-                           "chance": rec["chance"], "n": rec["n_val"]}
+        lin = _fit_and_score(Xtr, ytr, Xva, yva, "linear", compute_shuffled=True)
+        mlp = _fit_and_score(Xtr, ytr, Xva, yva, "mlp", compute_shuffled=False)
+        curve[int(off)] = {"acc": lin["acc"], "mlp_acc": mlp["acc"],
+                           "shuffled": lin["shuffled_acc"],
+                           "chance": lin["chance"], "n": lin["n_val"]}
     return curve
 
 

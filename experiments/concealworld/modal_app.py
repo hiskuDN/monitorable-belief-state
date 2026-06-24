@@ -173,6 +173,7 @@ def main(
     arms: str = "gpt,nextlat,mtp,jtp,nextlat_h1",
     n_states: int = 8,
     wander_len: int = 48,
+    update_density: float = 0.5,
     train_batches: int = 12000,
     n_eval: int = 6000,
     tag: str = "2a",
@@ -189,6 +190,7 @@ def main(
         f"trainer.train_batches={train_batches}",
         f"data.n_states={n_states}",
         f"data.wander_len={wander_len}",
+        f"data.update_density={update_density}",
     ]
     train_jobs = [(a, s, ov, tag) for a in arm_list for s in seed_list]
     print(f"[conceal:{tag}] training {len(train_jobs)} arms x seeds "
@@ -201,3 +203,38 @@ def main(
         _save_local(res, tag)
         print(f"[conceal:{tag}] probed {res['arm']} seed{res['seed']} "
               f"eff_rank={res['effective_rank_final']:.1f}")
+
+
+@app.local_entrypoint()
+def launch(
+    seeds: str = "1234",
+    arms: str = "gpt,nextlat",
+    n_states: int = 8,
+    wander_len: int = 48,
+    update_density: float = 0.5,
+    train_batches: int = 20000,
+    tag: str = "2a",
+):
+    """Fire-and-forget TRAINING via .spawn() — genuinely survives client disconnect when
+    run with `modal run --detach` (unlike .starmap/.remote, which Modal may cancel on
+    disconnect). Each train_arm runs server-side and commits its checkpoint to the volume.
+    Probe afterward, any time, on reconnect:
+        modal run experiments/concealworld/modal_app.py::probe_all --arms <...> --seeds <...> --tag <tag>
+    """
+    seed_list = [int(s) for s in seeds.split(",")]
+    ov = [
+        f"trainer.train_batches={train_batches}",
+        f"data.n_states={n_states}",
+        f"data.wander_len={wander_len}",
+        f"data.update_density={update_density}",
+    ]
+    spawned = []
+    for a in arms.split(","):
+        for s in seed_list:
+            fc = train_arm.spawn(a, s, ov, tag)
+            spawned.append((a, s, fc.object_id))
+            print(f"[launch:{tag}] spawned train_arm({a}, seed={s}) -> {fc.object_id}")
+    print(f"[launch:{tag}] {len(spawned)} detached training jobs running server-side. "
+          f"When done, probe with:\n"
+          f"  modal run experiments/concealworld/modal_app.py::probe_all "
+          f"--arms {arms} --seeds {seeds} --tag {tag}")
