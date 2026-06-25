@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import MindReader from '../components/MindReader.jsx'
 
-export default function Concealworld({ variant = 'gauge' }) {
+export default function Concealworld() {
   const [data, setData] = useState(null)
   const [err, setErr] = useState(null)
 
@@ -67,20 +67,11 @@ export default function Concealworld({ variant = 'gauge' }) {
         <p className="sub">
           Press play. The playhead sweeps the wandering window into the fork (the decision point).
           Default matchup: <b>NextLat-h1 keeps the secret</b> vs <b>GPT drops it</b> — swap either arm
-          or seed to set up your own. {variant === 'kcell'
-            ? <>Cycle the <b>↻ example</b> sequences (same sequence shown for both models). The secret
-              is a running aggregate, so the gold “true” cell <b>moves</b> as the walk proceeds — a
-              carrying model&apos;s belief tracks it; a deferring model&apos;s scatters.</>
-            : <>Toggle the probe between a linear monitor and a stronger nonlinear (MLP) one.</>}
-          <br />
-          <span style={{ fontSize: 13 }}>
-            view:{' '}
-            <a href="#/concealworld" style={{ fontWeight: variant === 'gauge' ? 700 : 400 }}>confidence gauge</a>
-            {' · '}
-            <a href="#/concealworld-kcell" style={{ fontWeight: variant === 'kcell' ? 700 : 400 }}>K-cell mind window</a>
-          </span>
+          or seed to set up your own, and cycle the <b>↻ example</b> sequences (same sequence shown for
+          both models). The secret is a running aggregate, so the gold “true” cell <b>moves</b> as the
+          walk proceeds — a carrying model&apos;s belief tracks it; a deferring model&apos;s scatters.
         </p>
-        <MindReader data={data} variant={variant} />
+        <MindReader data={data} />
         <div className="takeaway">
           GPT&apos;s confidence drains to chance mid-wander and only <b>snaps back at the fork</b> — too
           late for oversight. NextLat-h1 holds the secret the whole way. The information isn&apos;t
@@ -122,8 +113,7 @@ export default function Concealworld({ variant = 'gauge' }) {
         <p className="muted" style={{ marginTop: 0 }}>
           A tiny synthetic task (K={data.meta.K}) where the model <b>clones a concealing teacher</b> —
           it is <b>not adversarially trying to evade the probe</b> (that is the next experiment). The
-          effect is real but <b>fragile</b>: seed- and objective-dependent. The <b>confidence-gauge</b>
-          view aggregates decode accuracy over many secrets; the <b>K-cell</b> view shows the
+          effect is real but <b>fragile</b>: seed- and objective-dependent. The cells show the
           probe&apos;s <b>real per-position belief</b> on single held-out sequences (the secret is a
           running aggregate, so its true value moves as the walk proceeds). So the claim is narrow and
           honest: <em>concealment can defeat internals monitoring even without adversarial pressure,
