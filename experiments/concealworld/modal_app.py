@@ -306,3 +306,61 @@ def launch(
           f"When done, probe with:\n"
           f"  modal run experiments/concealworld/modal_app.py::probe_all "
           f"--arms {arms} --seeds {seeds} --tag {tag}")
+
+
+@app.local_entrypoint()
+def smoke_adv(arm: str = "nextlat_h1", lam: float = 0.5):
+    """Tiny GPU run validating the adversarial-probe wiring end-to-end (loss assembles,
+    adv_loss logged, no crash), then a probe. Not detached."""
+    ov = [
+        "trainer.train_batches=400", "trainer.val_interval=200", "trainer.val_batches=10",
+        "trainer.log_interval=50", "data.n_train=20000", "data.n_val=6000",
+        "data.n_states=4", "data.wander_len=24", "data.update_density=0.3",
+        f"model.lambda_adv={lam}", "model.adv_n_states=4",
+    ]
+    res = train_arm.remote(arm, 1234, ov, "smoke_adv")
+    print("SMOKE_ADV TRAIN:", res)
+    pres = run_probe.remote(arm, 1234, 3000, "smoke_adv")
+    _save_local(pres, "smoke_adv")
+    print("SMOKE_ADV PROBE eff_rank:", pres.get("effective_rank_final"))
+
+
+@app.local_entrypoint()
+def launch_adv(
+    seeds: str = "1234,1235,1236",
+    lambdas: str = "0.0,0.3,1.0",
+    arms: str = "gpt,nextlat_h1",
+    train_batches: int = 32000,
+    n_states: int = 4,
+    wander_len: int = 24,
+    update_density: float = 0.3,
+    tag_prefix: str = "2b",
+):
+    """Concealworld 2b: adversarial probe-evasion pressure sweep. For each (arm, lambda_adv)
+    spawn all seeds DETACHED (run with `modal run --detach`). lambda_adv=0 is the control
+    (no adversarial head; identical to 2a). Each (arm, lambda) gets its own tag so run dirs
+    don't collide; probe each tag separately on reconnect:
+        probe_all --arms gpt,nextlat_h1 --seeds <seeds> --tag 2b_l<lambda>
+    """
+    seed_list = [int(s) for s in seeds.split(",")]
+    spawned = []
+    for a in arms.split(","):
+        for lam in lambdas.split(","):
+            tag = f"{tag_prefix}_l{lam}"
+            ov = [
+                f"trainer.train_batches={train_batches}",
+                f"data.n_states={n_states}",
+                f"data.wander_len={wander_len}",
+                f"data.update_density={update_density}",
+                f"model.lambda_adv={lam}",
+                f"model.adv_n_states={n_states}",
+            ]
+            for s in seed_list:
+                fc = train_arm.spawn(a, s, ov, tag)
+                spawned.append((a, lam, s, fc.object_id))
+                print(f"[launch_adv:{tag}] {a} seed{s} lambda_adv={lam} -> {fc.object_id}")
+    tags = sorted({f"{tag_prefix}_l{lam}" for lam in lambdas.split(',')})
+    print(f"[launch_adv] {len(spawned)} detached jobs. Probe each tag on reconnect:")
+    for t in tags:
+        print(f"  modal run experiments/concealworld/modal_app.py::probe_all "
+              f"--arms {arms} --seeds {seeds} --tag {t}")

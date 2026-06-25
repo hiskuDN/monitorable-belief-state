@@ -46,6 +46,10 @@ class GPTConfig:
     compute_hidden_state_rank: bool = False
     # True: use fused Liger kernels. False: use regular PyTorch functions.
     use_fused: bool = False
+    # adversarial probe-evasion (concealworld 2b): lambda_adv>0 trains a gradient-reversal
+    # linear probe that pushes the trunk to hide the running secret. adv_n_states = K.
+    lambda_adv: float = 0.0
+    adv_n_states: int = 0
 
 
 class CausalSelfAttention(nn.Module):
@@ -200,6 +204,13 @@ class Transformer(DocumentRelativePositions, FusedCrossEntropyLoss, nn.Module):
             )
         )
         self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
+
+        # adversarial probe-evasion head (concealworld 2b); built only when active
+        self.adv_head = (
+            nn.Linear(config.n_embd, config.adv_n_states, bias=False)
+            if getattr(config, "adv_n_states", 0) > 0 and getattr(config, "lambda_adv", 0.0) > 0
+            else None
+        )
 
         # init all weights
         self.apply(self._init_weights)
@@ -387,6 +398,22 @@ class GPT(ModelBase):
             loss, hidden_states = self.model(
                 inputs, targets=targets, return_hidden_states=True
             )
+            ntp_loss = loss
+
+            # adversarial probe-evasion (concealworld 2b): gradient-reversed probe on the last
+            # hidden state pushes the trunk to hide the running secret. hidden_states is aligned
+            # to `inputs`; the GRL reverses gradient into the trunk while the probe head trains
+            # normally. lambda_adv=0 / no head => exact 2a behaviour.
+            adv_loss = None
+            if getattr(self.model, "adv_head", None) is not None:
+                from models.adversarial import adversarial_probe_loss
+                with self.fabric.autocast():
+                    adv_loss = adversarial_probe_loss(
+                        self.model.adv_head, hidden_states, inputs,
+                        self.config.adv_n_states, self.config.lambda_adv,
+                    )
+                loss = ntp_loss + adv_loss
+
             loss = loss / loss_div
 
             # Backward pass
@@ -395,8 +422,10 @@ class GPT(ModelBase):
 
         result = {
             "loss": loss.detach(),
-            "next_token_loss": loss.detach(),
+            "next_token_loss": (ntp_loss / loss_div).detach(),
         }
+        if adv_loss is not None:
+            result["adv_loss"] = (adv_loss / loss_div).detach()
 
         if self.config.compute_hidden_state_rank:
             hidden_states_det = hidden_states.detach()

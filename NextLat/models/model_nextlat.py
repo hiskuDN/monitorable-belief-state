@@ -42,6 +42,10 @@ class NextLatConfig:
     lambda_ce: float = 0.0  # optional CE loss on next-next-token prediction
     mtp_horizon: int = 1  # multi-step prediction horizon (d) in the paper
     proj_factor: float = 1.0  # projection factor in the latent dynamics model MLP
+    # adversarial probe-evasion (concealworld 2b): lambda_adv>0 trains a gradient-reversal
+    # linear probe that pushes the trunk to hide the running secret. adv_n_states = K.
+    lambda_adv: float = 0.0
+    adv_n_states: int = 0
 
 
 class NextLatDynamicsModel(nn.Module):
@@ -120,6 +124,13 @@ class NextLatTransformer(DocumentRelativePositions, FusedCrossEntropyLoss, nn.Mo
         )
         self.lm_head = nn.Linear(config.n_embd, config.vocab_size, bias=False)
         self.dynamics_model = NextLatDynamicsModel(config)
+
+        # adversarial probe-evasion head (concealworld 2b); built only when active
+        self.adv_head = (
+            nn.Linear(config.n_embd, config.adv_n_states, bias=False)
+            if getattr(config, "adv_n_states", 0) > 0 and getattr(config, "lambda_adv", 0.0) > 0
+            else None
+        )
 
         # init all weights
         self.apply(self._init_weights)
@@ -505,11 +516,26 @@ class NextLat(ModelBase, SpeculativeModel):
                 )
 
                 loss = ntp_loss + nextlat_loss
+
+                # adversarial probe-evasion (concealworld 2b): computed on hidden_states_det so
+                # its gradient-reversed contribution accumulates into hidden_states_det.grad and
+                # rides the existing second backward through the trunk. lambda_adv=0 / no head =>
+                # exact 2a behaviour. inputs == batch, so hidden_states aligns to it.
+                adv_loss = None
+                if getattr(self.model, "adv_head", None) is not None:
+                    from models.adversarial import adversarial_probe_loss
+                    adv_loss = adversarial_probe_loss(
+                        self.model.adv_head, hidden_states_det, inputs,
+                        self.config.adv_n_states, self.config.lambda_adv,
+                    )
+                    loss = loss + adv_loss
+
                 loss = loss / loss_div
                 ntp_loss = ntp_loss / loss_div
                 mse_loss = total_mse_loss / loss_div
                 nextlat_token_loss = total_nextlat_token_loss / loss_div
                 kl_loss = total_kl_loss / loss_div
+                adv_loss_log = (adv_loss / loss_div).detach() if adv_loss is not None else None
 
             # Backward pass
             # We accumulate gradients from the losses involving next-latent and next-token predictions,
@@ -547,6 +573,8 @@ class NextLat(ModelBase, SpeculativeModel):
                 for i in range(self.config.mtp_horizon)
             }
         )
+        if adv_loss_log is not None:
+            result["adv_loss"] = adv_loss_log
 
         # We measure the rank of the hidden states to check if the hidden states are collapsing.
         if self.config.compute_hidden_state_rank:
