@@ -1,6 +1,6 @@
 // Small SVG line chart: 81-way position decodability vs layer depth, per arm.
 const COLORS = { gpt: '#f2754f', nextlat: '#4fd1c5', mtp: '#b07cff', jtp: '#7c9cff', nextlat_h1: '#5ee0a0' }
-const LABEL = { gpt: 'GPT (baseline)', nextlat: 'NextLat', mtp: 'MTP', jtp: 'JTP', nextlat_h1: 'NextLat-h1' }
+const LABEL = { gpt: 'GPT (baseline)', nextlat: 'NextLat', mtp: 'MTP', jtp: 'JTP', nextlat_h1: 'NextLat · 1 step ahead' }
 
 export default function ByLayerChart({ arms }) {
   const W = 560, H = 260, m = { l: 44, r: 16, t: 16, b: 34 }

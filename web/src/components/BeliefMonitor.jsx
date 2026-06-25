@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import GridHeatmap from './GridHeatmap.jsx'
 
-const LABEL = { gpt: 'GPT', nextlat: 'NextLat', mtp: 'MTP', jtp: 'JTP', nextlat_h1: 'NextLat-h1' }
+const LABEL = { gpt: 'GPT', nextlat: 'NextLat', mtp: 'MTP', jtp: 'JTP', nextlat_h1: 'NextLat · 1 step ahead' }
 const COLOR = { gpt: '#f2754f', nextlat: '#4fd1c5', mtp: '#b07cff', jtp: '#7c9cff', nextlat_h1: '#5ee0a0' }
 
 const top1 = (s) => (s && s.length ? s[0] : null)

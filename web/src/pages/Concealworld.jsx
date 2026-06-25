@@ -66,7 +66,7 @@ export default function Concealworld() {
         <h2>Watch the secret stay, or fade then snap back</h2>
         <p className="sub">
           Press play. The playhead sweeps the wandering window into the fork (the decision point).
-          Default matchup: <b>NextLat-h1 keeps the secret</b> vs <b>GPT drops it</b>. Swap either arm
+          Default matchup: <b>NextLat (1 step ahead) keeps the secret</b> vs <b>GPT drops it</b>. Swap either arm
           or seed to set up your own, and cycle the <b>↻ example</b> sequences (same sequence shown for
           both models). The secret is a running aggregate, so the gold “true” cell <b>moves</b> as the
           walk proceeds: a carrying model&apos;s belief tracks it; a deferring model&apos;s scatters.
@@ -74,7 +74,7 @@ export default function Concealworld() {
         <MindReader data={data} />
         <div className="takeaway">
           GPT&apos;s confidence drains to chance mid-wander and only <b>snaps back at the fork</b>, too
-          late for oversight. NextLat-h1 holds the secret the whole way. The information isn&apos;t
+          late for oversight. NextLat (1 step ahead) holds the secret the whole way. The information isn&apos;t
           gone from GPT (it acts correctly); it&apos;s just <em>not where a monitor can read it</em>
           until the moment of action.
         </div>
@@ -94,15 +94,16 @@ export default function Concealworld() {
             return (
               <div className="stat" key={a}>
                 <div className={`v ${cls}`}>{s.carry}/{s.n_seeds}</div>
-                <div className="k">{a === 'nextlat' ? 'NextLat (h8)' : a === 'nextlat_h1' ? 'NextLat-h1' : a.toUpperCase()}
+                <div className="k">{a === 'nextlat' ? 'NextLat · 8 steps' : a === 'nextlat_h1' ? 'NextLat · 1 step' : a.toUpperCase()}
                   {s.learned < s.n_seeds ? ` · ${s.learned}/${s.n_seeds} learned` : ''}</div>
               </div>
             )
           })}
         </div>
         <div className="takeaway">
-          Only <b>minimal predict-ahead (NextLat-h1) keeps the secret in all 3 runs.</b> Full-horizon
-          NextLat is seed-variable, JTP behaves like GPT, and MTP only learned the task in one run.
+          Only <b>minimal predict-ahead (NextLat looking just 1 step ahead) keeps the secret in all 3
+          runs.</b> The 8-steps-ahead version is seed-variable, JTP behaves like GPT, and MTP only
+          learned the task in one run.
           So monitorability here is a <b>lever the objective moves, not a guarantee.</b>
         </div>
       </div>
