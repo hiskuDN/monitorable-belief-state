@@ -135,7 +135,7 @@ def main():
         "meta": {
             "tag": rel, "K": K, "chance": round(1.0 / K, 4) if K else None,
             "late_off": LATE_OFF, "carry_thr": CARRY_THR, "learned_fork": LEARNED_FORK,
-            "note": ("Per-seed read. The task has two task-optimal solutions — carry the "
+            "note": ("Per-seed read. The task has two task-optimal solutions: carry the "
                      "running secret, or defer-and-gather it at the fork; the predict-ahead "
                      "aux loss tips the balance. Precomputed from frozen checkpoints."),
         },

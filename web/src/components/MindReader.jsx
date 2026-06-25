@@ -4,7 +4,7 @@ import { colorFor, labelFor } from '../lib/arms.js'
 // "Monitor's-eye view": sweep a playhead across the wandering window into the fork
 // (decision point) and watch the probe's real per-position belief over the K secret
 // values on a single held-out sequence (data.examples). The hidden secret is a RUNNING
-// aggregate S_t, so the true value moves as the walk proceeds — a carry model's belief
+// aggregate S_t, so the true value moves as the walk proceeds: a carry model's belief
 // tracks it; a defer model's goes diffuse, then snaps onto the right value at the fork.
 
 const VISIBLE = '#5ee0a0'   // correct read
@@ -14,18 +14,18 @@ const WRONG = '#ff6b6b'     // confidently wrong
 const norm = (conf, chance) => Math.max(0, Math.min(1, (conf - chance) / (1 - chance)))
 
 // Three-state verdict from the probe's categorical readout:
-//   correct — top guess == true value, peaked enough to commit (green)
-//   wrong   — top guess != true value but still peaked: confidently wrong (red)
-//   blind   — diffuse / ≈ uniform, no committed read (gray)
+//   correct: top guess == true value, peaked enough to commit (green)
+//   wrong:   top guess != true value but still peaked, confidently wrong (red)
+//   blind:   diffuse / ≈ uniform, no committed read (gray)
 function cellVerdict(probs, trueV, chance, deferredFork) {
   const pmax = Math.max(...probs)
   const argmax = probs.indexOf(pmax)
   if (norm(pmax, chance) < 0.25)
-    return { kind: 'blind', color: BLIND, icon: '○', argmax, label: 'blind — no confident read' }
+    return { kind: 'blind', color: BLIND, icon: '○', argmax, label: 'blind: no confident read' }
   if (argmax === trueV)
     return {
       kind: 'correct', color: VISIBLE, icon: '✓', argmax,
-      label: deferredFork ? '⚠ correct — only at the decision (too late)' : 'reading the secret correctly',
+      label: deferredFork ? '⚠ correct, but only at the decision (too late)' : 'reading the secret correctly',
     }
   return { kind: 'wrong', color: WRONG, icon: '✗', argmax, label: 'confidently reading the WRONG value' }
 }
@@ -130,7 +130,7 @@ function Lane({ data, arms, lane, setLane, idx, posList, K, exIdx }) {
             {seedList.map(s => <option key={s} value={s}>seed {s}</option>)}
           </select>
         </span>
-        <span className="gc-read">eff-rank {series.sd?.eff_rank ?? '—'}</span>
+        <span className="gc-read">eff-rank {series.sd?.eff_rank ?? 'n/a'}</span>
       </div>
 
       <MindWindow cur={cur} K={K} st={st} />
