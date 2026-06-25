@@ -160,6 +160,21 @@ learned the task): **gpt 0/3 · jtp 0/3 · mtp 1/3** (only 1/3 learned) **· nex
 before 2b:** (a) **horizon sweep** mtp_horizon ∈ {1,2,4,8} × ≥5 seeds; (b) more seeds for
 the bimodality; (c) MTP learnability (more steps / gentler schedule).
 
+## 2b — adversarial probe-evasion (attempted, PARKED)
+
+Full read: [`docs/results/2026-06-25/2b_FINDINGS.md`](../../results/2026-06-25/2b_FINDINGS.md).
+We built a gradient-reversal adversarial probe (model rewarded for hiding S_t from a linear
+probe while solving the task) and swept the strength, both end-to-end and on frozen features.
+**Both hit the same wall: GRL adversarial removal does not remove** — a fresh probe still
+recovers S_t (~0.5) regardless of pressure; harder pressure just collapses the representation
+(known result, Elazar & Goldberg 2018). So we report **no adversarial-robustness verdict**.
+What we *did* establish: a β=0 invertible recoding preserves the secret (MLP 0.97) at ~0
+predict-ahead cost while linear decode is only ~0.48, so **2a's *linear* exposure is not
+load-bearing** (a hiding representation exists in principle). Honest framing: **2a is a
+non-adversarial (distillation-threat) result; cheap linear monitoring is likely not
+adversarially robust but is hard to disprove cleanly via training.** Resuming needs a
+converged-discriminator min-max or a non-training existence construction, with a capability gate.
+
 ## Implementation map
 
 - `NextLat/data/concealworld.py` — generator + `leakage_audit` + datamodule; registered as

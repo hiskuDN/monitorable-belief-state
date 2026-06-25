@@ -174,6 +174,39 @@ def probe(arm: str = "gpt", seed: int = 1234, n_eval: int = 6000, tag: str = "")
     _save_local(run_probe.remote(arm, seed, n_eval, tag), tag)
 
 
+@app.function(gpu=GPU, volumes={OUT: vol}, timeout=60 * 60, retries=2)
+def run_features(arm: str, seed: int, tag: str = "", n_eval: int = 8000):
+    """Dump frozen last-layer wandering features + S_t labels (probe --mode features) and
+    return the .npz bytes for the offline price-of-concealment study."""
+    vol.reload()
+    out_dir = _run_dir(arm, seed, tag)
+    ckpt = open(os.path.join(out_dir, "latest_ckpt")).read().strip()
+    cfgs = glob.glob(os.path.join(out_dir, "*", "materialized_config.yaml"))
+    assert cfgs, f"no materialized_config under {out_dir}"
+    cmd = [
+        "python", "/root/experiments/concealworld/probe.py",
+        "--config", cfgs[0], "--ckpt", ckpt, "--arm", arm, "--seed", str(seed),
+        "--out", out_dir, "--repo", REMOTE_REPO, "--n-eval", str(n_eval), "--mode", "features",
+    ]
+    _run(cmd, cwd=REMOTE_REPO)
+    with open(os.path.join(out_dir, f"features_{arm}_seed{seed}.npz"), "rb") as f:
+        return f.read()
+
+
+@app.local_entrypoint()
+def dump_features(arms: str = "gpt,nextlat_h1", seeds: str = "1234", tag: str = "2b_l0.0", n_eval: int = 8000):
+    """Pull frozen-feature .npz files (one per arm x seed) locally for the offline study."""
+    day = datetime.date.today().isoformat()
+    d = os.path.join(RESULTS_BASE, day, f"{tag}_features")
+    os.makedirs(d, exist_ok=True)
+    jobs = [(a, int(s), tag, n_eval) for a in arms.split(",") for s in seeds.split(",")]
+    for (a, s, _, _), data in zip(jobs, run_features.starmap(jobs)):
+        p = os.path.join(d, f"features_{a}_seed{s}.npz")
+        with open(p, "wb") as f:
+            f.write(data)
+        print(f"[features] wrote {p} ({len(data)//1024} KB)")
+
+
 @app.local_entrypoint()
 def probe_at(arm: str, seed: int, ckpt: str, tag: str = "2a_full",
              label: str = "bestckpt", n_eval: int = 6000):

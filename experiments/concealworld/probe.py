@@ -272,7 +272,7 @@ def main():
     ap.add_argument("--n-eval", type=int, default=6000)
     ap.add_argument("--probe-seed", type=int, default=99991)
     ap.add_argument("--batch-size", type=int, default=128)
-    ap.add_argument("--mode", default="full", choices=["full", "examples"])
+    ap.add_argument("--mode", default="full", choices=["full", "examples", "features"])
     ap.add_argument("--n-examples", type=int, default=4)
     args = ap.parse_args()
 
@@ -315,6 +315,20 @@ def main():
         with open(out_path, "w") as f:
             json.dump(out, f, indent=2)
         print(f"[probe] wrote {out_path} ({len(examples)} example trajectories)", flush=True)
+        return
+
+    if args.mode == "features":
+        # Dump frozen last-layer hidden states at wandering positions + running-secret labels +
+        # position offset + episode id (ri, for episode-level train/val splits), for the offline
+        # price-of-concealment study. float16 to keep it small.
+        items = label_pos["S_run"]["train"] + label_pos["S_run"]["val"]
+        X, y, off = gather(hs[fin], items)
+        ri = np.array([it[0] for it in items], dtype=np.int32)
+        os.makedirs(args.out, exist_ok=True)
+        out_path = os.path.join(args.out, f"features_{args.arm}_seed{args.seed}.npz")
+        np.savez_compressed(out_path, X=X.astype(np.float16), y=y.astype(np.int16),
+                            off=off.astype(np.int16), ri=ri, n_states=params["n_states"])
+        print(f"[probe] wrote {out_path}  X={X.shape} K={params['n_states']}", flush=True)
         return
 
     rng_sub = np.random.default_rng(123)

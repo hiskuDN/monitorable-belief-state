@@ -9,3 +9,6 @@ NextLat/
 
 # Blog draft is kept on the website only (web/src/content), not pushed as a doc.
 docs/blog/
+
+# large frozen-feature dumps (price-of-concealment); regenerate via dump_features
+docs/results/**/*.npz
