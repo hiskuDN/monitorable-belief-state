@@ -6,6 +6,8 @@ Last time I showed that a predict-ahead training objective makes a model's belie
 
 [Play with the live version (Demo 2).](https://probe.hiskiasdingeto.com/#/concealworld)
 
+![The monitor's-eye view. The true running value is gold-outlined. The predict-ahead model (left) keeps reading it correctly (green); the plain model (right) is confidently reading the wrong value mid-task (red), having dropped the secret it won't reconstruct until the fork.](figures/concealment-demo.png)
+
 ## The setup
 
 A model tracks a **secret**: a running value it updates as it goes. Its behavior reveals nothing about that value until a single late decision point (the *fork*), where it finally acts on it. In between, it just acts normally. The secret is needed, but masked. We freeze the model mid-masking and ask a linear probe: what is the secret right now?
