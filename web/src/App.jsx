@@ -38,6 +38,7 @@ export default function App() {
           <div className="topnav-links">
             <a href="#/" className={r.name === 'demo' ? 'active' : ''}>Demo 1 · Gridworld</a>
             <a href="#/concealworld" className={r.name === 'concealworld' ? 'active' : ''}>Demo 2 · Concealment</a>
+            <a href="#/blogs" className={r.name === 'blogs' || r.name === 'post' ? 'active' : ''}>Writing</a>
           </div>
         </div>
       </nav>
