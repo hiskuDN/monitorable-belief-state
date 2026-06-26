@@ -1,0 +1,395 @@
+"""
+Storyworld probe (belief tracking in language): extract per-layer frozen hidden states from a trained model and fit
+linear + MLP probes for the RUNNING secret S_t at wandering positions, with offset discipline,
+per-offset floors, and the gather-vs-carry diagnostic.
+
+Headline read = the RETENTION CURVE: per-offset-trained LINEAR decodability of S_t vs position t
+(distance from the start of the running sum). Predict-ahead arms should track S_t throughout
+(flat/high); a vanilla GPT can defer the computation to the fork (low mid-sequence, rising near
+the act token). We probe primarily at WAIT positions (the current token is uninformative, so any
+signal must be a carried register — the purest test), and report all wandering positions too.
+
+Confound controls (per Codex review):
+  * per-offset-TRAINED probes for the retention curve (no pooled cross-offset leakage);
+  * per-offset chance (1/K) + shuffled-label floors;
+  * the running secret is uniform at every offset by construction (leakage_audit), so position
+    carries no information about the label;
+  * gather-vs-carry diagnostic: decode S_final at the last wandering position vs the fork token —
+    a sharp jump = the model assembled the secret at the fork (deferral), not continuous carry.
+Linear is primary; MLP is the floor (availability-vs-linearization: if MLP recovers S for GPT but
+linear does not, predict-ahead's gain is *linearization* of an otherwise-tangled secret).
+
+Runs inside the NextLat repo (cwd=/root/NextLat on Modal). Invoked by modal_app.run_probe, or:
+    cd NextLat && python ../experiments/storyworld/probe.py \
+        --config <materialized_config.yaml> --ckpt <ckpt.pt> --arm gpt --seed 1234 --out <dir>
+"""
+
+import argparse
+import json
+import os
+import sys
+from collections import defaultdict
+
+import numpy as np
+
+
+def _import_repo(repo):
+    if repo not in sys.path:
+        sys.path.insert(0, repo)
+
+
+def _effective_rank(feats, max_n=4000, seed=0):
+    rng = np.random.default_rng(seed)
+    if feats.shape[0] > max_n:
+        feats = feats[rng.choice(feats.shape[0], max_n, replace=False)]
+    feats = feats - feats.mean(0, keepdims=True)
+    s = np.linalg.svd(feats, compute_uv=False)
+    s = s[s > 1e-12]
+    p = s / s.sum()
+    return float(np.exp(-(p * np.log(p)).sum()))
+
+
+def extract_hidden_states(model, records, tokenizer, device, batch_size=128):
+    """Run the frozen model; return hs[layer] = list (per record) of np.array [seqlen, D]."""
+    import torch
+
+    pad_id = tokenizer.pad_token_id
+    token_id_lists = [tokenizer.encode(" ".join(r["tokens"])) for r in records]
+
+    n_layers = None
+    hs = None
+    order = np.argsort([len(t) for t in token_id_lists])
+    with torch.no_grad():
+        for start in range(0, len(order), batch_size):
+            idx = order[start : start + batch_size]
+            seqs = [token_id_lists[i] for i in idx]
+            maxlen = max(len(s) for s in seqs)
+            arr = np.full((len(seqs), maxlen), pad_id, dtype=np.int64)
+            for j, s in enumerate(seqs):
+                arr[j, : len(s)] = s
+            inp = torch.from_numpy(arr).to(device)
+            _, all_layers = model.model(inp, return_all_layers=True)
+            all_layers = [l.float().cpu().numpy() for l in all_layers]
+            if hs is None:
+                n_layers = len(all_layers)
+                hs = [[None] * len(records) for _ in range(n_layers)]
+            for li in range(n_layers):
+                for j, i in enumerate(idx):
+                    hs[li][int(i)] = all_layers[li][j, : len(seqs[j])]
+    return hs, n_layers
+
+
+def gather(hs_layer, items):
+    X = np.stack([hs_layer[ri][pos] for (ri, pos, y, off) in items]).astype(np.float32)
+    y = np.array([y for (_, _, y, _) in items], dtype=np.int64)
+    off = np.array([off for (_, _, _, off) in items], dtype=np.int64)
+    return X, y, off
+
+
+def _fit_and_score(Xtr, ytr, Xva, yva, kind, compute_shuffled=True):
+    """Fit a probe (linear|mlp); return acc + chance + shuffled-label floor. Multiclass."""
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.neural_network import MLPClassifier
+    from sklearn.metrics import accuracy_score
+
+    scaler = StandardScaler().fit(Xtr)
+    Xtr_s, Xva_s = scaler.transform(Xtr), scaler.transform(Xva)
+    if kind == "mlp" and Xtr_s.shape[0] > 40000:
+        sub = np.random.default_rng(5).choice(Xtr_s.shape[0], 40000, replace=False)
+        Xtr_f, ytr_f = Xtr_s[sub], ytr[sub]
+    else:
+        Xtr_f, ytr_f = Xtr_s, ytr
+
+    def _make():
+        if kind == "linear":
+            return LogisticRegression(max_iter=2000, C=1.0)
+        return MLPClassifier(hidden_layer_sizes=(256,), max_iter=400, early_stopping=True)
+
+    clf = _make().fit(Xtr_f, ytr_f)
+    acc = float(accuracy_score(yva, clf.predict(Xva_s)))
+    sh_acc = float("nan")
+    if compute_shuffled:
+        ysh = ytr_f.copy()
+        np.random.default_rng(0).shuffle(ysh)
+        try:
+            sh_acc = float(accuracy_score(yva, _make().fit(Xtr_f, ysh).predict(Xva_s)))
+        except Exception:
+            sh_acc = float("nan")
+    chance = float(np.bincount(yva).max() / len(yva))
+    return {"acc": acc, "chance": chance, "shuffled_acc": sh_acc,
+            "n_train": int(len(ytr)), "n_val": int(len(yva))}
+
+
+def build_label_positions(records, split):
+    """Per-position target-shelf labels (off = absolute token position; fixed narrative structure).
+    Restricted to in_window (narrative) positions — L here is the FULL sequence incl. the query,
+    where S_running is -100. S_run: all narrative positions. S_run_wait: positions NOT inside a
+    target-move sentence (the belief carried across distractor/coreference tokens — purest read).
+    S_final: target shelf at the last narrative token and at the query/answer (gather-vs-carry)."""
+    out = {"S_run": {"train": [], "val": []},
+           "S_run_wait": {"train": [], "val": []},
+           "S_final": {"train": [], "val": []}}
+    for ri, rec in enumerate(records):
+        sp = "train" if split[ri] else "val"
+        L = rec["L"]
+        Sf = int(rec["y_dec"])
+        inwin, isupd = rec["in_window"], rec["is_update_pos"]
+        last_w = -1
+        for pos in range(L):
+            if inwin[pos] == 0:
+                continue
+            s = int(rec["S_running"][pos])
+            out["S_run"][sp].append((ri, pos, s, pos))
+            if isupd[pos] == 0:
+                out["S_run_wait"][sp].append((ri, pos, s, pos))
+            last_w = pos
+        out["S_final"][sp].append((ri, last_w, Sf, last_w))                  # last narrative token
+        out["S_final"][sp].append((ri, rec["act_pos"], Sf, rec["act_pos"]))  # query/answer token
+    return out
+
+
+def retention_curve(hs, items_tr, items_va, layer, min_train=300, min_val=30):
+    """Per-offset-TRAINED retention: a separate probe per position t. Fits both a linear
+    probe (primary) and an MLP (the availability-vs-linearization floor) per offset, so a
+    late-position collapse can be read as 'genuinely absent' (MLP also low) vs 'present but
+    nonlinear' (MLP recovers it). Returns {off: {acc, mlp_acc, shuffled, chance, n}}."""
+    tr_by, va_by = defaultdict(list), defaultdict(list)
+    for it in items_tr:
+        tr_by[it[3]].append(it)
+    for it in items_va:
+        va_by[it[3]].append(it)
+    curve = {}
+    for off in sorted(va_by):
+        tr, va = tr_by.get(off, []), va_by[off]
+        if len(tr) < min_train or len(va) < min_val:
+            continue
+        Xtr, ytr, _ = gather(hs[layer], tr)
+        Xva, yva, _ = gather(hs[layer], va)
+        lin = _fit_and_score(Xtr, ytr, Xva, yva, "linear", compute_shuffled=True)
+        mlp = _fit_and_score(Xtr, ytr, Xva, yva, "mlp", compute_shuffled=False)
+        curve[int(off)] = {"acc": lin["acc"], "mlp_acc": mlp["acc"],
+                           "shuffled": lin["shuffled_acc"],
+                           "chance": lin["chance"], "n": lin["n_val"]}
+    return curve
+
+
+def gather_vs_carry(hs, items_tr, items_va, layer, last_off, fork_off):
+    """Decode S_final at the last wandering position vs the fork token (per-position-trained).
+    A large positive jump (fork - last) = deferral/gather rather than continuous carry."""
+    def _at(off, items):
+        return [it for it in items if it[3] == off]
+    res = {}
+    for name, off in (("last_wander", last_off), ("fork", fork_off)):
+        tr, va = _at(off, items_tr), _at(off, items_va)
+        if len(tr) < 100 or len(va) < 30:
+            res[name] = float("nan")
+            continue
+        Xtr, ytr, _ = gather(hs[layer], tr)
+        Xva, yva, _ = gather(hs[layer], va)
+        res[name] = _fit_and_score(Xtr, ytr, Xva, yva, "linear", compute_shuffled=False)["acc"]
+    res["jump"] = (res["fork"] - res["last_wander"]
+                   if not (np.isnan(res["fork"]) or np.isnan(res["last_wander"])) else float("nan"))
+    return res
+
+
+def _proba_vec(clf, X, K):
+    """predict_proba mapped onto a fixed length-K vector (class id -> column)."""
+    p = clf.predict_proba(X)
+    out = np.zeros((X.shape[0], K), dtype=np.float64)
+    for j, c in enumerate(clf.classes_):
+        out[:, int(c)] = p[:, j]
+    return out
+
+
+def dump_examples(hs, records, split, fin, n_states, n_examples=4):
+    """For a few held-out example sequences, decode the RUNNING secret S_t at every
+    wandering position (per-offset-trained linear probes, same as the retention curve)
+    and S_final at the fork, recording the full per-position probability over the K
+    values. Feeds the K-cell 'mind window' in the web demo. Examples are chosen
+    deterministically from the val split (identical records/split across arms -> the same
+    example sequences for every arm, so it's a fair same-sequence/different-model view)."""
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.linear_model import LogisticRegression
+
+    label_pos = build_label_positions(records, split)
+    tr_by = defaultdict(list)
+    for it in label_pos["S_run"]["train"]:
+        tr_by[it[3]].append(it)
+    offset_clf = {}
+    for off, items in tr_by.items():
+        if len(items) < 300:
+            continue
+        X, y, _ = gather(hs[fin], items)
+        sc = StandardScaler().fit(X)
+        clf = LogisticRegression(max_iter=2000, C=1.0).fit(sc.transform(X), y)
+        offset_clf[off] = (sc, clf)
+
+    fork_off = int(records[0]["act_pos"])
+    fitems = [it for it in label_pos["S_final"]["train"] if it[3] == fork_off]
+    Xf, yf, _ = gather(hs[fin], fitems)
+    scf = StandardScaler().fit(Xf)
+    clff = LogisticRegression(max_iter=2000, C=1.0).fit(scf.transform(Xf), yf)
+
+    val_ris = [ri for ri in range(len(records)) if not split[ri]]
+    chosen, seen = [], set()
+    for ri in val_ris:
+        t = int(records[ri]["y_dec"])
+        if t not in seen:
+            chosen.append(ri); seen.add(t)
+        if len(chosen) >= n_examples:
+            break
+    for ri in val_ris:
+        if len(chosen) >= n_examples:
+            break
+        if ri not in chosen:
+            chosen.append(ri)
+
+    examples = []
+    for ri in chosen:
+        rec = records[ri]
+        L = int(rec["L"])
+        steps = []
+        for pos in range(L):
+            if pos not in offset_clf:
+                continue
+            sc, clf = offset_clf[pos]
+            x = sc.transform(hs[fin][ri][pos][None, :].astype(np.float32))
+            probs = _proba_vec(clf, x, n_states)[0]
+            steps.append({"pos": pos, "is_update": int(rec["is_update_pos"][pos]),
+                          "true_t": int(rec["S_running"][pos]),
+                          "probs": [round(float(p), 4) for p in probs]})
+        xf = scf.transform(hs[fin][ri][fork_off][None, :].astype(np.float32))
+        fprobs = _proba_vec(clff, xf, n_states)[0]
+        examples.append({"true_final": int(rec["y_dec"]), "L": L, "act_pos": fork_off,
+                         "steps": steps,
+                         "fork": {"true": int(rec["y_dec"]),
+                                  "probs": [round(float(p), 4) for p in fprobs]}})
+    return examples
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--config", required=True)
+    ap.add_argument("--ckpt", required=True)
+    ap.add_argument("--out", required=True)
+    ap.add_argument("--arm", required=True)
+    ap.add_argument("--seed", type=int, default=1234)
+    ap.add_argument("--repo", default="/root/NextLat")
+    ap.add_argument("--n-eval", type=int, default=6000)
+    ap.add_argument("--probe-seed", type=int, default=99991)
+    ap.add_argument("--batch-size", type=int, default=128)
+    ap.add_argument("--mode", default="full", choices=["full", "examples", "features"])
+    ap.add_argument("--n-examples", type=int, default=4)
+    args = ap.parse_args()
+
+    _import_repo(args.repo)
+    import lightning as L
+    from omegaconf import OmegaConf
+    from core_train import initialize_model
+    from data.storyworld import generate_records, params_from_config, leakage_audit
+
+    config = OmegaConf.load(args.config)
+    params = params_from_config(config)
+
+    records, _, tokenizer = generate_records(args.n_eval, args.probe_seed, params)
+    audit = leakage_audit(records, n_states=params["n_states"], raise_on_fail=True)
+    print(f"[probe] leakage audit: {audit['failures'] or 'OK'}", flush=True)
+
+    fabric = L.Fabric(devices=1)
+    config.trainer.compile = False
+    model = initialize_model(fabric, config, tokenizer,
+                             initialize_optimizer=False, checkpoint_path=args.ckpt)
+    model.eval()
+    device = next(model.model.parameters()).device
+
+    hs, n_layers = extract_hidden_states(model, records, tokenizer, device, batch_size=args.batch_size)
+    print(f"[probe] extracted {n_layers} layers over {len(records)} trajectories", flush=True)
+
+    rng = np.random.default_rng(0)
+    perm = rng.permutation(len(records))
+    split = np.zeros(len(records), dtype=bool)
+    split[perm[: int(0.8 * len(records))]] = True
+    label_pos = build_label_positions(records, split)
+
+    fin = n_layers - 1
+    if args.mode == "examples":
+        examples = dump_examples(hs, records, split, fin, params["n_states"], args.n_examples)
+        out = {"arm": args.arm, "seed": args.seed, "ckpt": args.ckpt,
+               "n_states": params["n_states"], "examples": examples}
+        os.makedirs(args.out, exist_ok=True)
+        out_path = os.path.join(args.out, f"examples_{args.arm}_seed{args.seed}.json")
+        with open(out_path, "w") as f:
+            json.dump(out, f, indent=2)
+        print(f"[probe] wrote {out_path} ({len(examples)} example trajectories)", flush=True)
+        return
+
+    if args.mode == "features":
+        # Dump frozen last-layer hidden states at wandering positions + running-secret labels +
+        # position offset + episode id (ri, for episode-level train/val splits), for the offline
+        # price-of-concealment study. float16 to keep it small.
+        items = label_pos["S_run"]["train"] + label_pos["S_run"]["val"]
+        X, y, off = gather(hs[fin], items)
+        ri = np.array([it[0] for it in items], dtype=np.int32)
+        os.makedirs(args.out, exist_ok=True)
+        out_path = os.path.join(args.out, f"features_{args.arm}_seed{args.seed}.npz")
+        np.savez_compressed(out_path, X=X.astype(np.float16), y=y.astype(np.int16),
+                            off=off.astype(np.int16), ri=ri, n_states=params["n_states"])
+        print(f"[probe] wrote {out_path}  X={X.shape} K={params['n_states']}", flush=True)
+        return
+
+    rng_sub = np.random.default_rng(123)
+
+    def _cap(items, n):
+        if len(items) <= n:
+            return items
+        return [items[i] for i in rng_sub.choice(len(items), n, replace=False)]
+
+    er_items = label_pos["S_run"]["train"][:6000]
+    Xer, _, _ = gather(hs[fin], er_items) if er_items else (np.zeros((2, 2)), None, None)
+    eff_rank = _effective_rank(Xer)
+
+    results = {}
+    for lab in ("S_run", "S_run_wait"):
+        tr = _cap(label_pos[lab]["train"], 40000)
+        va = _cap(label_pos[lab]["val"], 20000)
+        results[lab] = {"linear": [], "mlp": []}
+        if not tr or not va:
+            continue
+        print(f"[probe] fitting {lab} ({len(tr)} train / {len(va)} val)", flush=True)
+        for li in range(n_layers):
+            Xtr, ytr, _ = gather(hs[li], tr)
+            Xva, yva, _ = gather(hs[li], va)
+            for kind in ("linear", "mlp"):
+                rec = _fit_and_score(Xtr, ytr, Xva, yva, kind, compute_shuffled=(kind == "linear"))
+                rec["layer"] = li
+                results[lab][kind].append(rec)
+        results[lab]["retention"] = retention_curve(
+            hs, label_pos[lab]["train"], label_pos[lab]["val"], fin
+        )
+
+    last_w = int(np.max(np.where(records[0]["in_window"] == 1)))  # last narrative (in-window) token
+    results["gather_vs_carry"] = gather_vs_carry(
+        hs, label_pos["S_final"]["train"], label_pos["S_final"]["val"],
+        fin, last_off=last_w, fork_off=int(records[0]["act_pos"]),
+    )
+
+    out = {"arm": args.arm, "seed": args.seed, "ckpt": args.ckpt,
+           "n_layers": n_layers, "n_eval": len(records), "params": params,
+           "leakage_audit": audit, "effective_rank_final": eff_rank, "results": results}
+    os.makedirs(args.out, exist_ok=True)
+    out_path = os.path.join(args.out, f"probe_{args.arm}_seed{args.seed}.json")
+    with open(out_path, "w") as f:
+        json.dump(out, f, indent=2)
+    print(f"[probe] wrote {out_path}", flush=True)
+    for lab in ("S_run", "S_run_wait"):
+        if results[lab]["linear"]:
+            best = max(r["acc"] for r in results[lab]["linear"])
+            print(f"[probe] {args.arm} {lab}: best linear acc={best:.3f}", flush=True)
+    gvc = results["gather_vs_carry"]
+    print(f"[probe] {args.arm} gather-vs-carry: last={gvc['last_wander']:.3f} "
+          f"fork={gvc['fork']:.3f} jump={gvc['jump']:+.3f} eff_rank={eff_rank:.1f}", flush=True)
+
+
+if __name__ == "__main__":
+    main()

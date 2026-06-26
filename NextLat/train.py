@@ -32,6 +32,7 @@ from data.countdown import CountdownDataModule
 from data.manhattan_dataset import ManhattanDataModule
 from data.gridworld import GridworldDataModule
 from data.concealworld import ConcealworldDataModule
+from data.storyworld import StoryworldDataModule
 
 DATAMODULES = {
     "tinystories": TinyStoriesDataModule,
@@ -43,6 +44,7 @@ DATAMODULES = {
     "manhattan": ManhattanDataModule,
     "gridworld": GridworldDataModule,
     "concealworld": ConcealworldDataModule,
+    "storyworld": StoryworldDataModule,
 }
 
 
