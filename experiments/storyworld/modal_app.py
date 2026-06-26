@@ -311,15 +311,18 @@ def launch(
     seeds: str = "1234,1235,1236",
     arms: str = "gpt,nextlat,nextlat_h1,mtp,jtp",
     train_batches: int = 32000,
-    n_states: int = 0,         # 0 => use the config default (6); else override K (headroom knob)
+    n_states: int = 0,         # 0 => config default (6); else override K (headroom knob)
     n_distractors: int = -1,   # -1 => config default; else override (headroom knob)
     n_move: int = 0,           # 0 => config default; else override (headroom knob)
+    max_delta: int = 0,        # 0 => config default; else override (easing knob)
+    coref_prob: float = -1.0,  # <0 => config default; else override (easing knob)
+    target_density: float = -1.0,  # <0 => config default; else override
     tag: str = "story_v1",
 ):
     """Fire-and-forget TRAINING via .spawn() — survives client disconnect with `modal run
     --detach`. Each train_arm commits its checkpoint to the volume. Probe on reconnect:
         modal run experiments/storyworld/modal_app.py::probe_all --arms <...> --seeds <...> --tag <tag>
-    Storyworld env params come from the configs; only override headroom knobs if a value is set."""
+    Storyworld env params come from the configs; only override knobs if a value is set."""
     seed_list = [int(s) for s in seeds.split(",")]
     ov = [f"trainer.train_batches={train_batches}"]
     if n_states:
@@ -328,6 +331,12 @@ def launch(
         ov.append(f"data.n_distractors={n_distractors}")
     if n_move:
         ov.append(f"data.n_move={n_move}")
+    if max_delta:
+        ov.append(f"data.max_delta={max_delta}")
+    if coref_prob >= 0:
+        ov.append(f"data.coref_prob={coref_prob}")
+    if target_density >= 0:
+        ov.append(f"data.target_density={target_density}")
     spawned = []
     for a in arms.split(","):
         for s in seed_list:
@@ -338,6 +347,31 @@ def launch(
           f"When done, probe with:\n"
           f"  modal run experiments/storyworld/modal_app.py::probe_all "
           f"--arms {arms} --seeds {seeds} --tag {tag}")
+
+
+@app.local_entrypoint()
+def pilot(
+    arm: str = "gpt", seed: int = 1234, train_batches: int = 20000,
+    n_states: int = 4, n_distractors: int = 1, n_move: int = 6,
+    max_delta: int = 1, coref_prob: float = 0.0, target_density: float = 0.5,
+    tag: str = "story_pilot", n_eval: int = 6000,
+):
+    """Learnability/headroom gate (build-order step 3): train ONE arm at an eased config
+    (blocking) then probe, and report answer accuracy at the query. Ease until a GPT answers
+    well, then add complexity back before the full arm comparison."""
+    ov = [
+        f"trainer.train_batches={train_batches}",
+        f"data.n_states={n_states}", f"data.n_distractors={n_distractors}",
+        f"data.n_move={n_move}", f"data.max_delta={max_delta}",
+        f"data.coref_prob={coref_prob}", f"data.target_density={target_density}",
+    ]
+    print(f"[pilot:{tag}] training {arm} seed{seed}: K={n_states} n_move={n_move} "
+          f"n_distractors={n_distractors} max_delta={max_delta} coref={coref_prob} steps={train_batches}")
+    print(train_arm.remote(arm, seed, ov, tag))
+    res = run_probe.remote(arm, seed, n_eval, tag)
+    _save_local(res, tag)
+    print(f"[pilot:{tag}] {arm} seed{seed} ANSWER_ACC={res.get('answer_acc'):.3f} "
+          f"(chance={1.0/n_states:.3f}) eff_rank={res['effective_rank_final']:.1f}")
 
 
 @app.local_entrypoint()

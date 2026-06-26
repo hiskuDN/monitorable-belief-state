@@ -349,6 +349,23 @@ def main():
     Xer, _, _ = gather(hs[fin], er_items) if er_items else (np.zeros((2, 2)), None, None)
     eff_rank = _effective_rank(Xer)
 
+    # CAPABILITY GATE: does the model actually answer the query? Next-token argmax at the "?"
+    # position (act_pos-1) should equal the answer shelf token. Uses lm_head on the already-
+    # extracted final hidden state (logits = h @ lm_head.W^T). Distinguishes a real "no carrying"
+    # finding (model answers via deferral) from a task-not-learned confound.
+    Wlm = model.model.lm_head.weight.detach().float().cpu().numpy()  # [vocab, d]
+    n_ans = correct = 0
+    for ri, rec in enumerate(records):
+        ap = int(rec["act_pos"])
+        if ap < 1 or hs[fin][ri] is None or ap - 1 >= hs[fin][ri].shape[0]:
+            continue
+        ans_id = tokenizer.word_to_id.get(f"shelf{int(rec['y_dec'])}")
+        pred = int(np.argmax(hs[fin][ri][ap - 1].astype(np.float32) @ Wlm.T))
+        correct += int(pred == ans_id)
+        n_ans += 1
+    answer_acc = correct / max(1, n_ans)
+    print(f"[probe] {args.arm} answer accuracy at query: {answer_acc:.3f} (chance={1.0/params['n_states']:.3f})", flush=True)
+
     results = {}
     for lab in ("S_run", "S_run_wait"):
         tr = _cap(label_pos[lab]["train"], 40000)
@@ -376,7 +393,8 @@ def main():
 
     out = {"arm": args.arm, "seed": args.seed, "ckpt": args.ckpt,
            "n_layers": n_layers, "n_eval": len(records), "params": params,
-           "leakage_audit": audit, "effective_rank_final": eff_rank, "results": results}
+           "leakage_audit": audit, "effective_rank_final": eff_rank,
+           "answer_acc": answer_acc, "results": results}
     os.makedirs(args.out, exist_ok=True)
     out_path = os.path.join(args.out, f"probe_{args.arm}_seed{args.seed}.json")
     with open(out_path, "w") as f:
