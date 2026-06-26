@@ -4,7 +4,7 @@
 
 Last time I showed that a predict-ahead training objective makes a model's belief state easier to read with a simple linear probe, and I flagged the obvious limit: it said nothing about *deception*. Monitorability looked easiest exactly where safety is easy, because a plain belief-state variable is one the model has no reason to hide. So here is a first crack at the harder case. What if the model is *using* a piece of information but deliberately keeping it out of its behavior?
 
-[Play with the live version (Demo 2).](#/concealworld)
+[Play with the live version (Demo 2).](https://probe.hiskiasdingeto.com/#/concealworld)
 
 ## The setup
 
@@ -25,7 +25,7 @@ From the outside these look identical. Only a probe into the internals tells the
 
 A plain next-token model **defers, every time.** Mid-masking, the secret is gone, and not just hidden from a linear probe: a strong non-linear probe can't pull it out either (late-window recovery sits at chance, across every random seed). It genuinely isn't there. It snaps into existence right at the fork. Too late to monitor.
 
-A predict-ahead model **carries** it. Because its objective forces each internal state to predict its own future, deferring isn't an option, and the secret stays linearly readable across the masking window. Same task, same probe; one model is monitorable and the other is structurally blind. (You can watch this happen step by step in [the demo](#/concealworld): the plain model's belief scatters across the wandering window and only snaps onto the right value at the fork, while the predict-ahead model's tracks it the whole way.)
+A predict-ahead model **carries** it. Because its objective forces each internal state to predict its own future, deferring isn't an option, and the secret stays linearly readable across the masking window. Same task, same probe; one model is monitorable and the other is structurally blind. (You can watch this happen step by step in [the demo](https://probe.hiskiasdingeto.com/#/concealworld): the plain model's belief scatters across the wandering window and only snaps onto the right value at the fork, while the predict-ahead model's tracks it the whole way.)
 
 Two things surprised me. First, this was *not* uniform across predict-ahead variants the way the gridworld result was. The reliable carrier was the **shortest-horizon** version, the one that predicts only a single step ahead. Longer horizons were hit-or-miss across seeds (sometimes carrying, sometimes deferring exactly like the plain model), which I don't fully understand yet. More predict-ahead was not more carrying. Second, looking at the representations, carrying shows up as **compression**: the carriers squeeze the secret into a clean, low-dimensional register, while the deferring runs keep a sprawling high-dimensional state and reconstruct at the end.
 
@@ -39,4 +39,4 @@ The honest version. This is the **distillation** case: the model is cloning a co
 
 ---
 
-Play with it: [Demo 2 (Concealment)](#/concealworld). The gridworld result it builds on: [Demo 1](#/) and [the first post](https://substack.com/home/post/p-202754673). Built on NextLat (Teoh et al., NeurIPS 2025).
+Play with it: [Demo 2 (Concealment)](https://probe.hiskiasdingeto.com/#/concealworld). The gridworld result it builds on: [Demo 1](https://probe.hiskiasdingeto.com/) and [the first post](https://substack.com/home/post/p-202754673). Built on NextLat (Teoh et al., NeurIPS 2025).
