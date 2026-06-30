@@ -119,15 +119,15 @@ export default function StoryMind({ data }) {
         </button>
       </div>
 
-      {/* narrative text with the playhead */}
-      <div style={{ background: 'var(--panel-2)', border: '1px solid var(--border)', borderRadius: 12, padding: '14px 16px', margin: '16px 0', lineHeight: 1.9, fontSize: 15 }}>
+      {/* narrative text with the playhead — flex-wrap so tokens never overflow */}
+      <div style={{ background: 'var(--panel-2)', border: '1px solid var(--border)', borderRadius: 12, padding: '14px 16px', margin: '16px 0', display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '6px 3px', fontSize: 15 }}>
         {ex.tokens.map((t, i) => {
           const isCur = !cur.query && i === cur.pos
           const isQ = cur.query && i >= ex.act_pos - 5
           const active = isCur || isQ
           return (
             <span key={i} style={{
-              padding: '2px 4px', borderRadius: 5, margin: '0 1px',
+              padding: '2px 5px', borderRadius: 5, whiteSpace: 'nowrap',
               background: active ? 'var(--true)' : 'transparent',
               color: active ? '#0b0e14' : (i > ex.act_pos - 6 ? 'var(--muted)' : 'var(--text)'),
               fontWeight: active ? 700 : 400,
