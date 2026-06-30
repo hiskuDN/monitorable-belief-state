@@ -89,7 +89,13 @@ export default function StoryMind({ data }) {
     return f
   }, [ex])
 
-  useEffect(() => { setIdx(0) }, [exIdx])
+  // first step where the monitor reading diverges (GPT wrong but NextLat right) — start here so
+  // the contrast is visible on load instead of the trivial opening where both still track.
+  const startIdx = useMemo(() => {
+    const i = ex.steps.findIndex(s => argmax(s.gpt) !== s.true_t && argmax(s.nl) === s.true_t)
+    return i >= 0 ? i : 0
+  }, [ex])
+  useEffect(() => { setIdx(startIdx) }, [exIdx, startIdx])
   useEffect(() => { if (idx >= frames.length) setIdx(0) }, [frames.length, idx])
   useEffect(() => {
     if (!playing) return
