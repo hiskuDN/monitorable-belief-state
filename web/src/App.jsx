@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Demo from "./pages/Demo.jsx";
 import Concealworld from "./pages/Concealworld.jsx";
+import Storyworld from "./pages/Storyworld.jsx";
 import Blogs from "./pages/Blogs.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
 
@@ -17,6 +18,7 @@ function useHash() {
 
 function route(hash) {
   const path = hash.replace(/^#/, "") || "/";
+  if (path.startsWith("/storyworld")) return { name: "storyworld" };
   // legacy alias kept so old links to the K-cell view still resolve
   if (path.startsWith("/concealworld")) return { name: "concealworld" };
   if (path === "/blogs" || path === "/blogs/") return { name: "blogs" };
@@ -46,11 +48,15 @@ export default function App() {
             <a href="#/concealworld" className={r.name === "concealworld" ? "active" : ""}>
               Demo 2 · Concealment
             </a>
+            <a href="#/storyworld" className={r.name === "storyworld" ? "active" : ""}>
+              Demo 3 · Storyworld
+            </a>
           </div>
         </div>
       </nav>
       {r.name === "demo" && <Demo />}
       {r.name === "concealworld" && <Concealworld />}
+      {r.name === "storyworld" && <Storyworld />}
     </>
   );
 }
