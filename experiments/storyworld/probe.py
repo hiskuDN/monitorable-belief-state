@@ -256,13 +256,14 @@ def dump_examples(hs, records, split, fin, n_states, n_examples=4):
             sc, clf = offset_clf[pos]
             x = sc.transform(hs[fin][ri][pos][None, :].astype(np.float32))
             probs = _proba_vec(clf, x, n_states)[0]
-            steps.append({"pos": pos, "is_update": int(rec["is_update_pos"][pos]),
+            steps.append({"pos": pos, "tok": rec["tokens"][pos],
+                          "is_update": int(rec["is_update_pos"][pos]),
                           "true_t": int(rec["S_running"][pos]),
                           "probs": [round(float(p), 4) for p in probs]})
         xf = scf.transform(hs[fin][ri][fork_off][None, :].astype(np.float32))
         fprobs = _proba_vec(clff, xf, n_states)[0]
         examples.append({"true_final": int(rec["y_dec"]), "L": L, "act_pos": fork_off,
-                         "steps": steps,
+                         "tokens": list(rec["tokens"]), "steps": steps,
                          "fork": {"true": int(rec["y_dec"]),
                                   "probs": [round(float(p), 4) for p in fprobs]}})
     return examples

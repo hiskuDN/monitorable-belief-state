@@ -271,39 +271,40 @@ def train(arm: str = "gpt", seed: int = 1234, tag: str = ""):
 @app.local_entrypoint()
 def main(
     seeds: str = "1234,1235,1236",
-    arms: str = "gpt,nextlat,mtp,jtp,nextlat_h1",
-    n_states: int = 8,
-    wander_len: int = 48,
-    update_density: float = 0.5,
-    train_batches: int = 12000,
+    arms: str = "gpt,nextlat,nextlat_h1,mtp,jtp",
+    train_batches: int = 20000,
+    n_states: int = 4,
+    n_distractors: int = 1,
+    n_move: int = 6,
+    max_delta: int = 1,
+    coref_prob: float = 0.0,
+    target_density: float = 0.5,
     n_eval: int = 6000,
-    tag: str = "2a",
+    tag: str = "story_easy",
 ):
-    """Full concealworld (2a) sweep: train all (arm x seed) with a UNIFORM step budget
-    (matched across arms), then probe all, save locally to docs/results/<date>/<tag>/.
-
-    n_states (K) / wander_len (L) are the HEADROOM knobs: if GPT saturates on the running
-    secret in the wandering window (no gap), raise n_states and/or wander_len and re-run
-    under a new tag."""
+    """BLOCKING storyworld sweep: train all (arm x seed) then probe all, saving to
+    docs/results/<date>/<tag>/. Runs in one tracked job (auto-notified on completion); keep
+    the client connected (starmap is cancelled on disconnect — use ::launch + --detach for
+    fire-and-forget). Reports answer_acc (capability gate) per checkpoint."""
     seed_list = [int(s) for s in seeds.split(",")]
     arm_list = arms.split(",")
     ov = [
         f"trainer.train_batches={train_batches}",
-        f"data.n_states={n_states}",
-        f"data.wander_len={wander_len}",
-        f"data.update_density={update_density}",
+        f"data.n_states={n_states}", f"data.n_distractors={n_distractors}",
+        f"data.n_move={n_move}", f"data.max_delta={max_delta}",
+        f"data.coref_prob={coref_prob}", f"data.target_density={target_density}",
     ]
     train_jobs = [(a, s, ov, tag) for a in arm_list for s in seed_list]
-    print(f"[conceal:{tag}] training {len(train_jobs)} arms x seeds "
-          f"(K={n_states}, L={wander_len}, steps={train_batches})")
+    print(f"[story:{tag}] training {len(train_jobs)} arms x seeds "
+          f"(K={n_states}, n_move={n_move}, n_distractors={n_distractors}, coref={coref_prob}, steps={train_batches})")
     for r in train_arm.starmap(train_jobs):
-        print("[conceal] trained:", r)
+        print("[story] trained:", r)
     probe_jobs = [(a, s, n_eval, tag) for a in arm_list for s in seed_list]
-    print(f"[conceal:{tag}] probing {len(probe_jobs)} checkpoints")
+    print(f"[story:{tag}] probing {len(probe_jobs)} checkpoints")
     for res in run_probe.starmap(probe_jobs):
         _save_local(res, tag)
-        print(f"[conceal:{tag}] probed {res['arm']} seed{res['seed']} "
-              f"eff_rank={res['effective_rank_final']:.1f}")
+        print(f"[story:{tag}] probed {res['arm']} seed{res['seed']} "
+              f"answer_acc={res.get('answer_acc', float('nan')):.2f} eff_rank={res['effective_rank_final']:.1f}")
 
 
 @app.local_entrypoint()

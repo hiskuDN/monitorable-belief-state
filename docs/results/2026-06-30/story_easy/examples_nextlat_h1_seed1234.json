@@ -1,0 +1,5824 @@
+{
+  "arm": "nextlat_h1",
+  "seed": 1234,
+  "ckpt": "/outputs/nextlat_h1_story_easy_seed1234/NextLat-seed1234/ckpt_iter_20001_0.2991.pt",
+  "n_states": 4,
+  "examples": [
+    {
+      "true_final": 2,
+      "L": 61,
+      "act_pos": 59,
+      "tokens": [
+        "the",
+        "ball",
+        "starts",
+        "on",
+        "shelf2",
+        ".",
+        "the",
+        "book",
+        "starts",
+        "on",
+        "shelf0",
+        ".",
+        "alice",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "book",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "where",
+        "is",
+        "the",
+        "ball",
+        "?",
+        "shelf2",
+        "end"
+      ],
+      "steps": [
+        {
+          "pos": 0,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 1,
+          "tok": "ball",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 2,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 3,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 4,
+          "tok": "shelf2",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 5,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 6,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 7,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 8,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 9,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 10,
+          "tok": "shelf0",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 11,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 12,
+          "tok": "alice",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 13,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 14,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9998,
+            0.0
+          ]
+        },
+        {
+          "pos": 15,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 16,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0003,
+            0.9997,
+            0.0001
+          ]
+        },
+        {
+          "pos": 17,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 18,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0004,
+            0.9996
+          ]
+        },
+        {
+          "pos": 19,
+          "tok": "alice",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 20,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 21,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0006,
+            0.9994
+          ]
+        },
+        {
+          "pos": 22,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0003,
+            0.0012,
+            0.0001,
+            0.9983
+          ]
+        },
+        {
+          "pos": 23,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0003,
+            0.003,
+            0.0,
+            0.9967
+          ]
+        },
+        {
+          "pos": 24,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0006,
+            0.001,
+            0.9985
+          ]
+        },
+        {
+          "pos": 25,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9996,
+            0.0002,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 26,
+          "tok": "carol",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9994,
+            0.0003,
+            0.0001,
+            0.0002
+          ]
+        },
+        {
+          "pos": 27,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9993,
+            0.0003,
+            0.0002,
+            0.0002
+          ]
+        },
+        {
+          "pos": 28,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9967,
+            0.0,
+            0.0031,
+            0.0001
+          ]
+        },
+        {
+          "pos": 29,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9935,
+            0.0004,
+            0.0051,
+            0.001
+          ]
+        },
+        {
+          "pos": 30,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9939,
+            0.004,
+            0.0007,
+            0.0014
+          ]
+        },
+        {
+          "pos": 31,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9919,
+            0.006,
+            0.0013,
+            0.0009
+          ]
+        },
+        {
+          "pos": 32,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0026,
+            0.9974,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 33,
+          "tok": "bob",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0044,
+            0.9955,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 34,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0027,
+            0.9973,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 35,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0002,
+            0.9992,
+            0.0007,
+            0.0
+          ]
+        },
+        {
+          "pos": 36,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.016,
+            0.9748,
+            0.0091,
+            0.0
+          ]
+        },
+        {
+          "pos": 37,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0194,
+            0.9655,
+            0.0151,
+            0.0
+          ]
+        },
+        {
+          "pos": 38,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0088,
+            0.9843,
+            0.0069,
+            0.0
+          ]
+        },
+        {
+          "pos": 39,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0032,
+            0.9967,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 40,
+          "tok": "carol",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0012,
+            0.9986,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 41,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0021,
+            0.9978,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 42,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0007,
+            0.998,
+            0.0013,
+            0.0
+          ]
+        },
+        {
+          "pos": 43,
+          "tok": "up",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 44,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 45,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 46,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0003,
+            0.9993,
+            0.0004,
+            0.0
+          ]
+        },
+        {
+          "pos": 47,
+          "tok": "bob",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0004,
+            0.9995,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 48,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0004,
+            0.9995,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 49,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9999,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 50,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9636,
+            0.0364,
+            0.0
+          ]
+        },
+        {
+          "pos": 51,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9096,
+            0.0904,
+            0.0
+          ]
+        },
+        {
+          "pos": 52,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9733,
+            0.0267,
+            0.0
+          ]
+        },
+        {
+          "pos": 53,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0001,
+            0.0002,
+            0.9996,
+            0.0001
+          ]
+        }
+      ],
+      "fork": {
+        "true": 2,
+        "probs": [
+          0.0,
+          0.0001,
+          0.9999,
+          0.0
+        ]
+      }
+    },
+    {
+      "true_final": 3,
+      "L": 61,
+      "act_pos": 59,
+      "tokens": [
+        "the",
+        "ball",
+        "starts",
+        "on",
+        "shelf1",
+        ".",
+        "the",
+        "book",
+        "starts",
+        "on",
+        "shelf2",
+        ".",
+        "carol",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "ball",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "ball",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "ball",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "where",
+        "is",
+        "the",
+        "ball",
+        "?",
+        "shelf3",
+        "end"
+      ],
+      "steps": [
+        {
+          "pos": 0,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 1,
+          "tok": "ball",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 2,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 3,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 4,
+          "tok": "shelf1",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 5,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 6,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 7,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 8,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 9,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 10,
+          "tok": "shelf2",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9999,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 11,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9999,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 12,
+          "tok": "carol",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9999,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 13,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9999,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 14,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 15,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9985,
+            0.0015,
+            0.0
+          ]
+        },
+        {
+          "pos": 16,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9971,
+            0.0029,
+            0.0
+          ]
+        },
+        {
+          "pos": 17,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9977,
+            0.0023,
+            0.0
+          ]
+        },
+        {
+          "pos": 18,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9998,
+            0.0001
+          ]
+        },
+        {
+          "pos": 19,
+          "tok": "alice",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0002,
+            0.9994,
+            0.0004
+          ]
+        },
+        {
+          "pos": 20,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0002,
+            0.9994,
+            0.0004
+          ]
+        },
+        {
+          "pos": 21,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0005,
+            0.999,
+            0.0005
+          ]
+        },
+        {
+          "pos": 22,
+          "tok": "down",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.001,
+            0.9973,
+            0.0017
+          ]
+        },
+        {
+          "pos": 23,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.005,
+            0.994,
+            0.0009
+          ]
+        },
+        {
+          "pos": 24,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.001,
+            0.999,
+            0.0
+          ]
+        },
+        {
+          "pos": 25,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9999,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 26,
+          "tok": "carol",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9999,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 27,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 28,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9995,
+            0.0004,
+            0.0
+          ]
+        },
+        {
+          "pos": 29,
+          "tok": "down",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0002,
+            0.9996,
+            0.0003,
+            0.0
+          ]
+        },
+        {
+          "pos": 30,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0009,
+            0.9989,
+            0.0003,
+            0.0
+          ]
+        },
+        {
+          "pos": 31,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0027,
+            0.9962,
+            0.0011,
+            0.0
+          ]
+        },
+        {
+          "pos": 32,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9995,
+            0.0,
+            0.0,
+            0.0005
+          ]
+        },
+        {
+          "pos": 33,
+          "tok": "alice",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 34,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 35,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 36,
+          "tok": "down",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 37,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 38,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9988,
+            0.0,
+            0.0,
+            0.0012
+          ]
+        },
+        {
+          "pos": 39,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 40,
+          "tok": "alice",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 41,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 42,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 43,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0063,
+            0.0,
+            0.0,
+            0.9937
+          ]
+        },
+        {
+          "pos": 44,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0038,
+            0.0,
+            0.0,
+            0.9962
+          ]
+        },
+        {
+          "pos": 45,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0078,
+            0.0,
+            0.0,
+            0.9922
+          ]
+        },
+        {
+          "pos": 46,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 47,
+          "tok": "bob",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 48,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 49,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 50,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0024,
+            0.0,
+            0.0,
+            0.9976
+          ]
+        },
+        {
+          "pos": 51,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0029,
+            0.0,
+            0.0,
+            0.9971
+          ]
+        },
+        {
+          "pos": 52,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0056,
+            0.0,
+            0.0,
+            0.9944
+          ]
+        },
+        {
+          "pos": 53,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "fork": {
+        "true": 3,
+        "probs": [
+          0.0001,
+          0.0,
+          0.0002,
+          0.9997
+        ]
+      }
+    },
+    {
+      "true_final": 0,
+      "L": 61,
+      "act_pos": 59,
+      "tokens": [
+        "the",
+        "ball",
+        "starts",
+        "on",
+        "shelf0",
+        ".",
+        "the",
+        "book",
+        "starts",
+        "on",
+        "shelf2",
+        ".",
+        "alice",
+        "moves",
+        "book",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "book",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "ball",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "book",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "where",
+        "is",
+        "the",
+        "ball",
+        "?",
+        "shelf0",
+        "end"
+      ],
+      "steps": [
+        {
+          "pos": 0,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 1,
+          "tok": "ball",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 2,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 3,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 4,
+          "tok": "shelf0",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 5,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 6,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 7,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 8,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 9,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 10,
+          "tok": "shelf2",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 11,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 12,
+          "tok": "alice",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 13,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 14,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0002,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 15,
+          "tok": "up",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9996,
+            0.0004,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 16,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0002,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 17,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 18,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 19,
+          "tok": "carol",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 20,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 21,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 22,
+          "tok": "up",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 23,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9994,
+            0.0005,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 24,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9997,
+            0.0,
+            0.0,
+            0.0003
+          ]
+        },
+        {
+          "pos": 25,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 26,
+          "tok": "carol",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 27,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 28,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9997,
+            0.0003,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 29,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9982,
+            0.0018,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 30,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.999,
+            0.001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 31,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9996,
+            0.0004,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 32,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9999,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 33,
+          "tok": "bob",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 34,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 35,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9983,
+            0.0017,
+            0.0
+          ]
+        },
+        {
+          "pos": 36,
+          "tok": "down",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 37,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 38,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 39,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 40,
+          "tok": "bob",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 41,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 42,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 43,
+          "tok": "up",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.996,
+            0.004,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 44,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9971,
+            0.0029,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 45,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9967,
+            0.0033,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 46,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9997,
+            0.0002,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 47,
+          "tok": "alice",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 48,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 49,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 50,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9994,
+            0.0006,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 51,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9987,
+            0.0013,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 52,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9988,
+            0.0012,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 53,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "fork": {
+        "true": 0,
+        "probs": [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "true_final": 1,
+      "L": 61,
+      "act_pos": 59,
+      "tokens": [
+        "the",
+        "ball",
+        "starts",
+        "on",
+        "shelf1",
+        ".",
+        "the",
+        "book",
+        "starts",
+        "on",
+        "shelf0",
+        ".",
+        "carol",
+        "moves",
+        "ball",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "ball",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "book",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "where",
+        "is",
+        "the",
+        "ball",
+        "?",
+        "shelf1",
+        "end"
+      ],
+      "steps": [
+        {
+          "pos": 0,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 1,
+          "tok": "ball",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 2,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 3,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 4,
+          "tok": "shelf1",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 5,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 6,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 7,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 8,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 9,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 10,
+          "tok": "shelf0",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9999,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 11,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 12,
+          "tok": "carol",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9999,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 13,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9999,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 14,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 15,
+          "tok": "down",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9997,
+            0.0001,
+            0.0001
+          ]
+        },
+        {
+          "pos": 16,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0003,
+            0.9996,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 17,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9996,
+            0.0002,
+            0.0001
+          ]
+        },
+        {
+          "pos": 18,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9997,
+            0.0002,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 19,
+          "tok": "carol",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0002,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 20,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0002,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 21,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9989,
+            0.0011,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 22,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9838,
+            0.0159,
+            0.0,
+            0.0002
+          ]
+        },
+        {
+          "pos": 23,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9947,
+            0.0043,
+            0.001,
+            0.0
+          ]
+        },
+        {
+          "pos": 24,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9828,
+            0.0172,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 25,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9999,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 26,
+          "tok": "carol",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9999,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 27,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9999,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 28,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 29,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9991,
+            0.0009,
+            0.0
+          ]
+        },
+        {
+          "pos": 30,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0004,
+            0.9992,
+            0.0004,
+            0.0
+          ]
+        },
+        {
+          "pos": 31,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9999,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 32,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9996,
+            0.0003
+          ]
+        },
+        {
+          "pos": 33,
+          "tok": "bob",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 34,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 35,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9998,
+            0.0
+          ]
+        },
+        {
+          "pos": 36,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9961,
+            0.0039
+          ]
+        },
+        {
+          "pos": 37,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9973,
+            0.0026
+          ]
+        },
+        {
+          "pos": 38,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9963,
+            0.0037
+          ]
+        },
+        {
+          "pos": 39,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9998,
+            0.0
+          ]
+        },
+        {
+          "pos": 40,
+          "tok": "alice",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0003,
+            0.9997,
+            0.0
+          ]
+        },
+        {
+          "pos": 41,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0002,
+            0.9997,
+            0.0
+          ]
+        },
+        {
+          "pos": 42,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 43,
+          "tok": "down",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0161,
+            0.9839,
+            0.0
+          ]
+        },
+        {
+          "pos": 44,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0138,
+            0.9862,
+            0.0
+          ]
+        },
+        {
+          "pos": 45,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0078,
+            0.9922,
+            0.0
+          ]
+        },
+        {
+          "pos": 46,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9999,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 47,
+          "tok": "carol",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9997,
+            0.0001,
+            0.0001
+          ]
+        },
+        {
+          "pos": 48,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0001
+          ]
+        },
+        {
+          "pos": 49,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 50,
+          "tok": "up",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.994,
+            0.006,
+            0.0
+          ]
+        },
+        {
+          "pos": 51,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9945,
+            0.0055,
+            0.0
+          ]
+        },
+        {
+          "pos": 52,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9919,
+            0.0081,
+            0.0
+          ]
+        },
+        {
+          "pos": 53,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "fork": {
+        "true": 1,
+        "probs": [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "true_final": 2,
+      "L": 61,
+      "act_pos": 59,
+      "tokens": [
+        "the",
+        "ball",
+        "starts",
+        "on",
+        "shelf3",
+        ".",
+        "the",
+        "book",
+        "starts",
+        "on",
+        "shelf0",
+        ".",
+        "alice",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "ball",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "ball",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "book",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "book",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "where",
+        "is",
+        "the",
+        "ball",
+        "?",
+        "shelf2",
+        "end"
+      ],
+      "steps": [
+        {
+          "pos": 0,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 1,
+          "tok": "ball",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 2,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 3,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 4,
+          "tok": "shelf3",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0001,
+            0.9999
+          ]
+        },
+        {
+          "pos": 5,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0001,
+            0.9999
+          ]
+        },
+        {
+          "pos": 6,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0001,
+            0.9999
+          ]
+        },
+        {
+          "pos": 7,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0,
+            0.9999
+          ]
+        },
+        {
+          "pos": 8,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0001,
+            0.9998
+          ]
+        },
+        {
+          "pos": 9,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0,
+            0.9999
+          ]
+        },
+        {
+          "pos": 10,
+          "tok": "shelf0",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0,
+            0.9999
+          ]
+        },
+        {
+          "pos": 11,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0,
+            0.9999
+          ]
+        },
+        {
+          "pos": 12,
+          "tok": "alice",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0,
+            0.9999
+          ]
+        },
+        {
+          "pos": 13,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0,
+            0.9999
+          ]
+        },
+        {
+          "pos": 14,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0,
+            0.9999
+          ]
+        },
+        {
+          "pos": 15,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0003,
+            0.0,
+            0.0,
+            0.9997
+          ]
+        },
+        {
+          "pos": 16,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0005,
+            0.0,
+            0.0,
+            0.9995
+          ]
+        },
+        {
+          "pos": 17,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0007,
+            0.0,
+            0.0,
+            0.9993
+          ]
+        },
+        {
+          "pos": 18,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 19,
+          "tok": "alice",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0,
+            0.0,
+            0.0002
+          ]
+        },
+        {
+          "pos": 20,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0,
+            0.0,
+            0.0002
+          ]
+        },
+        {
+          "pos": 21,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 22,
+          "tok": "down",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9947,
+            0.0,
+            0.0,
+            0.0053
+          ]
+        },
+        {
+          "pos": 23,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.997,
+            0.0,
+            0.0,
+            0.003
+          ]
+        },
+        {
+          "pos": 24,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 25,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0002,
+            0.0,
+            0.0,
+            0.9998
+          ]
+        },
+        {
+          "pos": 26,
+          "tok": "bob",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0003,
+            0.0,
+            0.0,
+            0.9997
+          ]
+        },
+        {
+          "pos": 27,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0002,
+            0.0,
+            0.0,
+            0.9998
+          ]
+        },
+        {
+          "pos": 28,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 29,
+          "tok": "down",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 30,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 31,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        },
+        {
+          "pos": 32,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 33,
+          "tok": "alice",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 34,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 35,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 36,
+          "tok": "up",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 37,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 38,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 39,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 40,
+          "tok": "alice",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 41,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 42,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 43,
+          "tok": "up",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.001,
+            0.999,
+            0.0
+          ]
+        },
+        {
+          "pos": 44,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0006,
+            0.9994,
+            0.0
+          ]
+        },
+        {
+          "pos": 45,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0027,
+            0.9973,
+            0.0
+          ]
+        },
+        {
+          "pos": 46,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 47,
+          "tok": "bob",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 48,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 49,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 50,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0151,
+            0.9849,
+            0.0
+          ]
+        },
+        {
+          "pos": 51,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0247,
+            0.9753,
+            0.0
+          ]
+        },
+        {
+          "pos": 52,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0211,
+            0.9789,
+            0.0
+          ]
+        },
+        {
+          "pos": 53,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0001,
+            0.0001,
+            0.9998,
+            0.0
+          ]
+        }
+      ],
+      "fork": {
+        "true": 2,
+        "probs": [
+          0.0,
+          0.0001,
+          0.9999,
+          0.0
+        ]
+      }
+    },
+    {
+      "true_final": 3,
+      "L": 61,
+      "act_pos": 59,
+      "tokens": [
+        "the",
+        "ball",
+        "starts",
+        "on",
+        "shelf0",
+        ".",
+        "the",
+        "book",
+        "starts",
+        "on",
+        "shelf3",
+        ".",
+        "bob",
+        "moves",
+        "book",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "where",
+        "is",
+        "the",
+        "ball",
+        "?",
+        "shelf3",
+        "end"
+      ],
+      "steps": [
+        {
+          "pos": 0,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 1,
+          "tok": "ball",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 2,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 3,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 4,
+          "tok": "shelf0",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 5,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 6,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 7,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 8,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 9,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 10,
+          "tok": "shelf3",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 11,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 12,
+          "tok": "bob",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 13,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 14,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0001,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 15,
+          "tok": "up",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9997,
+            0.0003,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 16,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0002,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 17,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 18,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 19,
+          "tok": "bob",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 20,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 21,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 22,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9991,
+            0.0009,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 23,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9992,
+            0.0008,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 24,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9992,
+            0.0008,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 25,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9997,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 26,
+          "tok": "bob",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 27,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9997,
+            0.0002,
+            0.0
+          ]
+        },
+        {
+          "pos": 28,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0002,
+            0.9995,
+            0.0003,
+            0.0
+          ]
+        },
+        {
+          "pos": 29,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9984,
+            0.0016,
+            0.0
+          ]
+        },
+        {
+          "pos": 30,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0005,
+            0.9977,
+            0.0017,
+            0.0001
+          ]
+        },
+        {
+          "pos": 31,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9982,
+            0.0018,
+            0.0
+          ]
+        },
+        {
+          "pos": 32,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9997,
+            0.0003
+          ]
+        },
+        {
+          "pos": 33,
+          "tok": "carol",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 34,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 35,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 36,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9991,
+            0.0009
+          ]
+        },
+        {
+          "pos": 37,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.999,
+            0.0009
+          ]
+        },
+        {
+          "pos": 38,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9982,
+            0.0018
+          ]
+        },
+        {
+          "pos": 39,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 40,
+          "tok": "carol",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0002,
+            0.9998,
+            0.0
+          ]
+        },
+        {
+          "pos": 41,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0002,
+            0.9998,
+            0.0
+          ]
+        },
+        {
+          "pos": 42,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 43,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0012,
+            0.0,
+            0.9918,
+            0.007
+          ]
+        },
+        {
+          "pos": 44,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0006,
+            0.0,
+            0.9932,
+            0.0062
+          ]
+        },
+        {
+          "pos": 45,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0118,
+            0.0,
+            0.9522,
+            0.036
+          ]
+        },
+        {
+          "pos": 46,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0004,
+            0.0,
+            0.0001,
+            0.9994
+          ]
+        },
+        {
+          "pos": 47,
+          "tok": "bob",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0007,
+            0.0,
+            0.0006,
+            0.9987
+          ]
+        },
+        {
+          "pos": 48,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0008,
+            0.0,
+            0.0006,
+            0.9986
+          ]
+        },
+        {
+          "pos": 49,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0023,
+            0.9977
+          ]
+        },
+        {
+          "pos": 50,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0002,
+            0.0,
+            0.0408,
+            0.9591
+          ]
+        },
+        {
+          "pos": 51,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0459,
+            0.954
+          ]
+        },
+        {
+          "pos": 52,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0001,
+            0.0,
+            0.0454,
+            0.9545
+          ]
+        },
+        {
+          "pos": 53,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 3,
+          "probs": [
+            0.0006,
+            0.0,
+            0.0004,
+            0.999
+          ]
+        }
+      ],
+      "fork": {
+        "true": 3,
+        "probs": [
+          0.0009,
+          0.0,
+          0.0053,
+          0.9938
+        ]
+      }
+    },
+    {
+      "true_final": 3,
+      "L": 61,
+      "act_pos": 59,
+      "tokens": [
+        "the",
+        "ball",
+        "starts",
+        "on",
+        "shelf0",
+        ".",
+        "the",
+        "book",
+        "starts",
+        "on",
+        "shelf2",
+        ".",
+        "bob",
+        "moves",
+        "book",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "book",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "ball",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "ball",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "ball",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "where",
+        "is",
+        "the",
+        "ball",
+        "?",
+        "shelf3",
+        "end"
+      ],
+      "steps": [
+        {
+          "pos": 0,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 1,
+          "tok": "ball",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 2,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 3,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 4,
+          "tok": "shelf0",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 5,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 6,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 7,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 8,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 9,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 10,
+          "tok": "shelf2",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 11,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 12,
+          "tok": "bob",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 13,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 14,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0002,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 15,
+          "tok": "up",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9996,
+            0.0004,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 16,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0002,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 17,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 18,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 19,
+          "tok": "carol",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 20,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 21,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 22,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 23,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9995,
+            0.0005,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 24,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9994,
+            0.0,
+            0.0,
+            0.0005
+          ]
+        },
+        {
+          "pos": 25,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 26,
+          "tok": "carol",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 27,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 28,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9993,
+            0.0007,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 29,
+          "tok": "up",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9994,
+            0.0005,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 30,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9995,
+            0.0004,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 31,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9994,
+            0.0003,
+            0.0,
+            0.0003
+          ]
+        },
+        {
+          "pos": 32,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 0,
+          "probs": [
+            0.9998,
+            0.0002,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 33,
+          "tok": "alice",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 34,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 35,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9997,
+            0.0003,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 36,
+          "tok": "up",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9979,
+            0.0019,
+            0.0,
+            0.0002
+          ]
+        },
+        {
+          "pos": 37,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9985,
+            0.001,
+            0.0,
+            0.0004
+          ]
+        },
+        {
+          "pos": 38,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9967,
+            0.0033,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 39,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9999,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 40,
+          "tok": "alice",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 41,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9997,
+            0.0002,
+            0.0
+          ]
+        },
+        {
+          "pos": 42,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9998,
+            0.0002,
+            0.0
+          ]
+        },
+        {
+          "pos": 43,
+          "tok": "down",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0019,
+            0.9981,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 44,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0013,
+            0.9987,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 45,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0003,
+            0.9997,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 46,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 47,
+          "tok": "bob",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 48,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9999,
+            0.0001,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 49,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9994,
+            0.0006,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 50,
+          "tok": "down",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9964,
+            0.0034,
+            0.0001,
+            0.0001
+          ]
+        },
+        {
+          "pos": 51,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9948,
+            0.0051,
+            0.0,
+            0.0001
+          ]
+        },
+        {
+          "pos": 52,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 0,
+          "probs": [
+            0.9866,
+            0.0128,
+            0.0005,
+            0.0001
+          ]
+        },
+        {
+          "pos": 53,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 3,
+          "probs": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      ],
+      "fork": {
+        "true": 3,
+        "probs": [
+          0.0002,
+          0.0,
+          0.0009,
+          0.9989
+        ]
+      }
+    },
+    {
+      "true_final": 1,
+      "L": 61,
+      "act_pos": 59,
+      "tokens": [
+        "the",
+        "ball",
+        "starts",
+        "on",
+        "shelf2",
+        ".",
+        "the",
+        "book",
+        "starts",
+        "on",
+        "shelf0",
+        ".",
+        "alice",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "alice",
+        "moves",
+        "ball",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "bob",
+        "moves",
+        "book",
+        "up",
+        "one",
+        "shelves",
+        ".",
+        "carol",
+        "moves",
+        "book",
+        "down",
+        "one",
+        "shelves",
+        ".",
+        "where",
+        "is",
+        "the",
+        "ball",
+        "?",
+        "shelf1",
+        "end"
+      ],
+      "steps": [
+        {
+          "pos": 0,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 1,
+          "tok": "ball",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 2,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 3,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.2483,
+            0.256,
+            0.2494,
+            0.2463
+          ]
+        },
+        {
+          "pos": 4,
+          "tok": "shelf2",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 5,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 6,
+          "tok": "the",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 7,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 8,
+          "tok": "starts",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 9,
+          "tok": "on",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 10,
+          "tok": "shelf0",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 11,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 12,
+          "tok": "alice",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 13,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0
+          ]
+        },
+        {
+          "pos": 14,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0002,
+            0.9998,
+            0.0
+          ]
+        },
+        {
+          "pos": 15,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0006,
+            0.9994,
+            0.0
+          ]
+        },
+        {
+          "pos": 16,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0003,
+            0.9997,
+            0.0
+          ]
+        },
+        {
+          "pos": 17,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0012,
+            0.9988,
+            0.0
+          ]
+        },
+        {
+          "pos": 18,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 19,
+          "tok": "carol",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9998,
+            0.0001
+          ]
+        },
+        {
+          "pos": 20,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9998,
+            0.0002
+          ]
+        },
+        {
+          "pos": 21,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0003,
+            0.9995,
+            0.0002
+          ]
+        },
+        {
+          "pos": 22,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0029,
+            0.9968,
+            0.0003
+          ]
+        },
+        {
+          "pos": 23,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0008,
+            0.9982,
+            0.001
+          ]
+        },
+        {
+          "pos": 24,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0014,
+            0.9986,
+            0.0
+          ]
+        },
+        {
+          "pos": 25,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9998,
+            0.0002
+          ]
+        },
+        {
+          "pos": 26,
+          "tok": "alice",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 27,
+          "tok": "moves",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0001,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 28,
+          "tok": "ball",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0,
+            0.9999,
+            0.0001
+          ]
+        },
+        {
+          "pos": 29,
+          "tok": "down",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0045,
+            0.9955,
+            0.0
+          ]
+        },
+        {
+          "pos": 30,
+          "tok": "one",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0077,
+            0.9923,
+            0.0
+          ]
+        },
+        {
+          "pos": 31,
+          "tok": "shelves",
+          "is_update": 1,
+          "true_t": 2,
+          "probs": [
+            0.0,
+            0.0028,
+            0.9971,
+            0.0
+          ]
+        },
+        {
+          "pos": 32,
+          "tok": ".",
+          "is_update": 1,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 33,
+          "tok": "carol",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9999,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 34,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 35,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0016,
+            0.9984,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 36,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0011,
+            0.9986,
+            0.0003,
+            0.0
+          ]
+        },
+        {
+          "pos": 37,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0017,
+            0.9976,
+            0.0008,
+            0.0
+          ]
+        },
+        {
+          "pos": 38,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0005,
+            0.999,
+            0.0005,
+            0.0
+          ]
+        },
+        {
+          "pos": 39,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9998,
+            0.0002,
+            0.0
+          ]
+        },
+        {
+          "pos": 40,
+          "tok": "bob",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9998,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 41,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9998,
+            0.0002,
+            0.0
+          ]
+        },
+        {
+          "pos": 42,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0001,
+            0.9999,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 43,
+          "tok": "up",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9999,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 44,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9999,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 45,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 46,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9999,
+            0.0001,
+            0.0
+          ]
+        },
+        {
+          "pos": 47,
+          "tok": "carol",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9998,
+            0.0002,
+            0.0
+          ]
+        },
+        {
+          "pos": 48,
+          "tok": "moves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9998,
+            0.0002,
+            0.0
+          ]
+        },
+        {
+          "pos": 49,
+          "tok": "book",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 50,
+          "tok": "down",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 51,
+          "tok": "one",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 52,
+          "tok": "shelves",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "pos": 53,
+          "tok": ".",
+          "is_update": 0,
+          "true_t": 1,
+          "probs": [
+            0.0,
+            0.9998,
+            0.0002,
+            0.0
+          ]
+        }
+      ],
+      "fork": {
+        "true": 1,
+        "probs": [
+          0.0,
+          0.9996,
+          0.0004,
+          0.0
+        ]
+      }
+    }
+  ]
+}
