@@ -1,9 +1,18 @@
 import monitorabilityMd from './content/monitorability.md?raw'
 import concealmentMd from './content/concealment.md?raw'
+import storyworldMd from './content/storyworld.md?raw'
 
 // Blog post registry. Add new posts here (newest first); each `body` is a markdown
 // string (imported with ?raw) rendered by BlogPost.jsx.
 export const posts = [
+  {
+    slug: 'reading-a-model-mind-as-it-reads-a-story',
+    title: 'Reading a model\'s mind as it reads a story',
+    date: '2026-07-03',
+    excerpt:
+      'The first two posts lived in symbolic worlds. This one moves the same test onto language: a little story that shuffles a ball around some shelves. A predict-ahead model keeps the ball\'s location readable the whole way; a plain model drops it mid-story and only reconstructs it at the question, too late to monitor.',
+    body: storyworldMd,
+  },
   {
     slug: 'catching-a-model-that-hides-a-secret',
     title: 'Catching a model that hides a secret',

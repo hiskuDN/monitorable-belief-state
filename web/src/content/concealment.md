@@ -2,7 +2,7 @@
 
 *Epistemic status: small synthetic experiments (~7M-parameter models, a symbolic task). A follow-up to the gridworld post, pushing on the thing I said it couldn't touch: a secret the model has a reason to hide. Early, and sharing for discussion.*
 
-[Last time](https://substack.com/home/post/p-202754673) I showed that a predict-ahead training objective makes a model's belief state easier to read with a simple linear probe, and I flagged the obvious limit: it said nothing about *deception*. Monitorability looked easiest exactly where safety is easy, because a plain belief-state variable is one the model has no reason to hide. So here is a first crack at the harder case. What if the model is *using* a piece of information but deliberately keeping it out of its behavior?
+[Last time](https://hisku.substack.com/p/monitorability-as-a-training-objective) I showed that a predict-ahead training objective makes a model's belief state easier to read with a simple linear probe, and I flagged the obvious limit: it said nothing about *deception*. Monitorability looked easiest exactly where safety is easy, because a plain belief-state variable is one the model has no reason to hide. So here is a first crack at the harder case. What if the model is *using* a piece of information but deliberately keeping it out of its behavior?
 
 [Play with the live version (Demo 2).](https://probe.hiskiasdingeto.com/#/concealworld)
 
@@ -41,4 +41,4 @@ The honest version. This is the **distillation** case: the model is cloning a co
 
 ---
 
-Play with it: [Demo 2 (Concealment)](https://probe.hiskiasdingeto.com/#/concealworld). The gridworld result it builds on: [Demo 1](https://probe.hiskiasdingeto.com/) and [the first post](https://substack.com/home/post/p-202754673). Built on NextLat (Teoh et al., NeurIPS 2025).
+Play with it: [Demo 2 (Concealment)](https://probe.hiskiasdingeto.com/#/concealworld). The gridworld result it builds on: [Demo 1](https://probe.hiskiasdingeto.com/) and [the first post](https://hisku.substack.com/p/monitorability-as-a-training-objective). Built on NextLat (Teoh et al., NeurIPS 2025).
