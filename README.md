@@ -4,6 +4,15 @@ Research on whether **predictive-representation training objectives** (next-late
 
 **[Try the interactive demo](https://probe.hiskiasdingeto.com/)**: a linear probe reading position from a frozen GPT vs predict-ahead models, side by side.
 
+## Featured writeups
+
+- **[Monitorability as a training objective](https://hisku.substack.com/p/monitorability-as-a-training-objective)** (Jun 19, 2026)  
+  Can you train a model so its internal state is easier to read?
+- **[Catching a model that hides a secret](https://hisku.substack.com/p/catching-a-model-that-hides-a-secret)** (Jun 26, 2026)  
+  What happens when a model uses information but deliberately keeps it out of behavior?
+- **[Reading a model's mind as it reads a story](https://hisku.substack.com/p/reading-a-models-mind-as-it-reads)** (Jul 03, 2026)  
+  Extends the same monitorability test from symbolic tasks to text.
+
 <p align="center">
   <img src="media/demo.gif" width="640" alt="The belief-state monitor: a linear probe decoding each model's position. The vanilla model is muddy and lands on the wrong cell; the predict-ahead model is sharp and correct." />
 </p>
