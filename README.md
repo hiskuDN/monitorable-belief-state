@@ -37,7 +37,8 @@ So the durable claim is class-level: *predict-ahead training improves belief-sta
 - **[docs/research-overview.md](docs/research-overview.md)**: current-state synthesis (the question, what the experiments established, the prioritized program). Read this first.
 - **[docs/agentic-application.md](docs/agentic-application.md)**: translating the program to tool-calling agents, the most safety-relevant destination.
 - **[docs/safety-task-menu.md](docs/safety-task-menu.md)**: a ranked menu of next experiments (synthetic, clean-label safety tasks).
-- **[docs/nextlat-ai-safety-research-agenda.md](docs/nextlat-ai-safety-research-agenda.md)**: the original NextLat-specific agenda (the seed framing).
+
+Background / historical framing: **[docs/nextlat-ai-safety-research-agenda.md](docs/nextlat-ai-safety-research-agenda.md)** (the original NextLat-specific seed agenda).
 
 ## Experiments
 
