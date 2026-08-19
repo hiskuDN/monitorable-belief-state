@@ -57,6 +57,8 @@ export default function App() {
       {r.name === "demo" && <Demo />}
       {r.name === "concealworld" && <Concealworld />}
       {r.name === "storyworld" && <Storyworld />}
+      {r.name === "blogs" && <Blogs />}
+      {r.name === "post" && <BlogPost slug={r.slug} />}
     </>
   );
 }
